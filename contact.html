@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact · Eldeva</title>
+<meta name="description" content="Get in touch with Eldeva. We reply within 24 to 48 hours, Monday to Friday.">
+<meta property="og:title" content="Contact · Eldeva">
+<meta property="og:image" content="assets/lifestyle/thumb/bedroom-morning-lunas-secret.jpg">
+<meta name="theme-color" content="#2F241D">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='7' y='12' width='18' height='18' rx='3' fill='%23A5531F'/%3E%3Crect x='7' y='12' width='18' height='3' rx='1.5' fill='%23F3E4CC'/%3E%3Cpath d='M16 2c2.6 3.2 3.4 5.4 3.4 7a3.4 3.4 0 0 1-6.8 0c0-1.6.8-3.8 3.4-7z' fill='%23E8A25C'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<a class="skip" href="#contactForm">Skip to the contact form</a>
+<div class="announce">Free UK delivery on orders over <b>£55</b> · one offer per order</div>
+
+<header class="site" id="hdr">
+  <div class="pill">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="our-story.html">Our Story</a></li>
+      <li><a href="customer-love.html">Customer Love</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="icon-btn burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg></button>
+    <a class="logo" href="index.html" aria-label="Eldeva home">Eldeva</a>
+    <div class="tools">
+      <button class="mood-t" id="moodBtn" aria-pressed="false" title="Light the candle for evening mode">
+        <span class="wick" aria-hidden="true"><span class="fl"></span><span class="jar"></span></span>
+        <span class="lbl" id="moodLbl">Light the candle</span>
+      </button>
+      <button class="icon-btn" id="bagBtn" aria-label="Open your bag" aria-controls="drawer"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="bag-count" id="bagCount">0</span></button>
+    </div>
+  </div>
+  <nav class="mnav" id="mnav" aria-label="Menu" hidden>
+    <a href="index.html">Home</a><a href="shop.html">Shop</a><a href="our-story.html">Our Story</a><a href="customer-love.html">Customer Love</a><a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="phero short">
+  <div class="ph-img"><img src="assets/lifestyle/bedroom-morning-lunas-secret.jpg" alt="" fetchpriority="high" style="object-position:50% 35%"></div>
+  <div class="wrap">
+    <p class="eyebrow fade-in" style="--d:.2s">Contact</p>
+    <h1 class="split" data-split>Let us <em>help</em></h1>
+    <p class="lede fade-in" style="--d:.9s">We reply within 24–48 hours (Mon–Fri). For order queries, include your order number.</p>
+  </div>
+</section>
+
+<!-- FORM + HELP -->
+<section class="pad contact">
+  <div class="wrap">
+    <form class="form reveal" id="contactForm" novalidate>
+      <h2>Contact form</h2>
+      <div class="field"><label for="cName">Name</label><input id="cName" name="name" autocomplete="name"></div>
+      <div class="field"><label for="cEmail">Email <i>*</i></label><input id="cEmail" name="email" type="email" autocomplete="email" required aria-describedby="eEmail"><span class="err" id="eEmail" hidden>Enter an email address like name@example.co.uk.</span></div>
+      <div class="field"><label for="cPhone">Phone number</label><input id="cPhone" name="phone" type="tel" autocomplete="tel"></div>
+      <div class="field"><label for="cReason">Reason for contact <i>*</i></label>
+        <select id="cReason" name="reason" required aria-describedby="eReason">
+          <option value="">Choose one</option><option>Order / Delivery</option><option>Returns / Exchanges</option><option>Product advice (scent help)</option><option>Wholesale / Collaborations</option><option>Gifting</option><option>Other</option>
+        </select><span class="err" id="eReason" hidden>Choose a reason so it reaches the right person.</span></div>
+      <div class="field full" id="orderField"><label for="cOrder">Order number (if relevant)</label><input id="cOrder" name="order" placeholder="#1001"></div>
+      <div class="field full"><label for="cComment">Comment</label><textarea id="cComment" name="comment" placeholder="Tell us what's going on, or which scents you're deciding between."></textarea></div>
+      <div class="send"><p>Fields marked <span style="color:var(--accent)">*</span> are required.</p><button class="btn" type="submit">Send <span aria-hidden="true">→</span></button></div>
+    </form>
+    <div class="help stagger">
+      <a class="hcard reveal" href="#"><img src="assets/pages/contact-hero.jpg" alt=""><div><b>Delivery &amp; Tracking</b><span>Shipping policy and order status</span></div><i aria-hidden="true">→</i></a>
+      <a class="hcard reveal" href="#"><img src="assets/pages/help-returns.png" alt=""><div><b>Returns</b><span>Our refund policy</span></div><i aria-hidden="true">→</i></a>
+      <a class="hcard reveal" href="customer-love.html"><img src="assets/pages/help-b.jpg" alt=""><div><b>Reviews</b><span>What customers say</span></div><i aria-hidden="true">→</i></a>
+      <a class="hcard reveal" href="our-story.html"><img src="assets/pages/help-c.jpg" alt=""><div><b>Our Story</b><span>The family behind Eldeva</span></div><i aria-hidden="true">→</i></a>
+      <div class="hours reveal"><b>We read every message.</b><p>Replies within 24–48 hours, Monday to Friday. Messages sent at the weekend are answered first thing Monday.</p>
+        <div class="soc"><a href="https://www.instagram.com/eldeva_candle/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://www.facebook.com/profile.php?id=61576234643166" target="_blank" rel="noopener">Facebook ↗</a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIST -->
+<section class="fx halo">
+  <div class="bgfx" data-fx="halo"></div>
+  <div class="wrap">
+    <div class="listbox reveal">
+      <p class="eyebrow" style="color:rgba(251,243,234,.75)">Join the Eldeva list</p>
+      <h2 style="margin-top:16px">First sniff of<br>new scents.</h2>
+      <p class="sub">New pours, restocks and the occasional candle-care tip. A couple of letters a month, never more.</p>
+      <form id="listForm" novalidate>
+        <label for="email" class="eyebrow">Email address</label>
+        <input id="email" type="email" placeholder="you@example.co.uk" autocomplete="email" required>
+        <button class="btn btn--light" type="submit">Sign up</button>
+        <p class="ok" id="listMsg" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site fx">
+  <div class="bgfx" data-fx="footer"></div>
+  <div class="wrap">
+    <div class="frow">
+      <p class="ftag">Elevated home fragrance, poured in small batches by a family in the UK.</p>
+      <nav class="flinks" aria-label="Footer"><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="our-story.html">Our Story</a><a href="customer-love.html">Customer Love</a><a href="contact.html">Contact</a></nav>
+      <div class="fsocial"><a href="https://www.instagram.com/eldeva_candle/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://www.facebook.com/profile.php?id=61576234643166" target="_blank" rel="noopener">Facebook ↗</a></div>
+    </div>
+    <div class="giant" aria-hidden="true">Eldeva</div>
+    <div class="fine"><span>© 2026 Eldeva · Privacy policy · Refund policy · Terms of service</span><span>Concept redesign mockup, not a live store</span></div>
+  </div>
+</footer>
+
+<div class="glow" id="glow" aria-hidden="true"></div>
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-label="Your bag" aria-hidden="true">
+  <div class="dr-head"><h2>Your bag</h2><button class="icon-btn" id="drawerClose" aria-label="Close bag">✕</button></div>
+  <div class="dr-ship"><p id="shipMsg"></p><div class="dr-track"><i id="shipBar"></i></div></div>
+  <ul class="dr-list" id="bagList"></ul>
+  <div class="dr-foot">
+    <div class="dr-total"><span>Subtotal</span><b id="bagTotal">£0.00</b></div>
+    <button class="btn" id="checkout" style="width:100%;justify-content:center">Checkout</button>
+    <p class="dr-note">Concept mockup. Checkout isn't connected.</p>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="site.js"></script>
+<script type="module" src="site-fx.js"></script>
+<script>
+/* Contact form: check the two required fields, then show a thank-you (nothing is sent in this mockup) */
+(() => {
+  const f = $("#contactForm"), email = $("#cEmail"), reason = $("#cReason");
+  const check = (el, ok, err) => { el.setAttribute("aria-invalid", !ok); $(err).hidden = ok; return ok; };
+  email.addEventListener("blur", () => email.value && check(email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()), "#eEmail"));
+  reason.addEventListener("change", () => check(reason, !!reason.value, "#eReason"));
+  f.addEventListener("submit", e => {
+    e.preventDefault();
+    const a = check(email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()), "#eEmail");
+    const b = check(reason, !!reason.value, "#eReason");
+    if (!a) return email.focus(); if (!b) return reason.focus();
+    const name = $("#cName").value.trim().split(" ")[0];
+    f.innerHTML = `<div class="sent"><span class="flame" aria-hidden="true"></span><h3>Thank you${name ? ", " + name.replace(/[<>&"]/g, "") : ""}.</h3>
+      <p class="muted" style="max-width:40ch">Your message is with us. We'll reply within 24–48 hours (Mon–Fri).</p>
+      <p class="muted" style="font-size:13px">Concept mockup: this form isn't connected yet.</p></div>`;
+  });
+  $$('.hcard[href="#"]').forEach(a => a.addEventListener("click", e => { e.preventDefault(); showToast("Policy pages live on the Shopify store"); }));
+})();
+</script>
+</body>
+</html>

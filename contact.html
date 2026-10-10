@@ -7,11 +7,11 @@
 <meta name="description" content="Get in touch with Eldeva. We reply within 24 to 48 hours, Monday to Friday.">
 <meta property="og:title" content="Contact · Eldeva">
 <meta property="og:image" content="assets/lifestyle/thumb/bedroom-morning-lunas-secret.jpg">
-<meta name="theme-color" content="#2F241D">
+<meta name="theme-color" content="#4A2E24">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='7' y='12' width='18' height='18' rx='3' fill='%23A5531F'/%3E%3Crect x='7' y='12' width='18' height='3' rx='1.5' fill='%23F3E4CC'/%3E%3Cpath d='M16 2c2.6 3.2 3.4 5.4 3.4 7a3.4 3.4 0 0 1-6.8 0c0-1.6.8-3.8 3.4-7z' fill='%23E8A25C'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -23,7 +23,12 @@
   <div class="pill">
     <ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="shop.html">Shop</a></li>
+      <li class="has-sub"><a href="shop.html" aria-haspopup="true">Shop<svg class="chev" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
+        <div class="sub"><div class="sub-in" role="list" aria-label="Shop collections">
+          <a role="listitem" href="shop.html#seasonal">Seasonal<small>Limited pours for the season</small></a>
+          <a role="listitem" href="shop.html#bundles">Bundles<small>Gift-ready sets</small></a>
+          <a role="listitem" href="shop.html#core">Core Scents<small>Our signature eight</small></a>
+        </div></div></li>
       <li><a href="our-story.html">Our Story</a></li>
       <li><a href="customer-love.html">Customer Love</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -31,15 +36,11 @@
     <button class="icon-btn burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg></button>
     <a class="logo" href="index.html" aria-label="Eldeva home">Eldeva</a>
     <div class="tools">
-      <button class="mood-t" id="moodBtn" aria-pressed="false" title="Light the candle for evening mode">
-        <span class="wick" aria-hidden="true"><span class="fl"></span><span class="jar"></span></span>
-        <span class="lbl" id="moodLbl">Light the candle</span>
-      </button>
       <button class="icon-btn" id="bagBtn" aria-label="Open your bag" aria-controls="drawer"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="bag-count" id="bagCount">0</span></button>
     </div>
   </div>
   <nav class="mnav" id="mnav" aria-label="Menu" hidden>
-    <a href="index.html">Home</a><a href="shop.html">Shop</a><a href="our-story.html">Our Story</a><a href="customer-love.html">Customer Love</a><a href="contact.html">Contact</a>
+    <a href="index.html">Home</a><a href="shop.html">Shop</a><a class="msub" href="shop.html#seasonal">Seasonal</a><a class="msub" href="shop.html#bundles">Bundles</a><a class="msub" href="shop.html#core">Core Scents</a><a href="our-story.html">Our Story</a><a href="customer-love.html">Customer Love</a><a href="contact.html">Contact</a>
   </nav>
 </header>
 
@@ -87,8 +88,8 @@
   <div class="bgfx" data-fx="halo"></div>
   <div class="wrap">
     <div class="listbox reveal">
-      <p class="eyebrow" style="color:rgba(251,243,234,.75)">Join the Eldeva list</p>
-      <h2 style="margin-top:16px">First sniff of<br>new scents.</h2>
+      <p class="eyebrow" style="color:rgba(251,248,244,.75)">Join the Eldeva list</p>
+      <h2 style="margin-top:16px">First to know,<br>first to light.</h2>
       <p class="sub">New pours, restocks and the occasional candle-care tip. A couple of letters a month, never more.</p>
       <form id="listForm" novalidate>
         <label for="email" class="eyebrow">Email address</label>
@@ -111,7 +112,7 @@
       <div class="fsocial"><a href="https://www.instagram.com/eldeva_candle/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://www.facebook.com/profile.php?id=61576234643166" target="_blank" rel="noopener">Facebook ↗</a></div>
     </div>
     <div class="giant" aria-hidden="true">Eldeva</div>
-    <div class="fine"><span>© 2026 Eldeva · Privacy policy · Refund policy · Terms of service</span><span>Concept redesign mockup, not a live store</span></div>
+    <div class="fine"><span>© 2026 Eldeva · Privacy policy · Refund policy · Terms of service</span></div>
   </div>
 </footer>
 
@@ -130,6 +131,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="catalog.js"></script>
 <script src="site.js"></script>
 <script type="module" src="site-fx.js"></script>
 <script>

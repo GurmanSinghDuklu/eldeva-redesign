@@ -7,11 +7,11 @@
 <meta name="description" content="Shop Eldeva soy candles, reed diffusers, wax melts, gift sets and candle accessories. Free UK delivery over £55.">
 <meta property="og:title" content="Shop · Eldeva">
 <meta property="og:image" content="assets/pages/shop-candles.jpg">
-<meta name="theme-color" content="#2F241D">
+<meta name="theme-color" content="#4A2E24">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='7' y='12' width='18' height='18' rx='3' fill='%23A5531F'/%3E%3Crect x='7' y='12' width='18' height='3' rx='1.5' fill='%23F3E4CC'/%3E%3Cpath d='M16 2c2.6 3.2 3.4 5.4 3.4 7a3.4 3.4 0 0 1-6.8 0c0-1.6.8-3.8 3.4-7z' fill='%23E8A25C'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -23,7 +23,12 @@
   <div class="pill">
     <ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="shop.html">Shop</a></li>
+      <li class="has-sub"><a href="shop.html" aria-haspopup="true">Shop<svg class="chev" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
+        <div class="sub"><div class="sub-in" role="list" aria-label="Shop collections">
+          <a role="listitem" href="shop.html#seasonal">Seasonal<small>Limited pours for the season</small></a>
+          <a role="listitem" href="shop.html#bundles">Bundles<small>Gift-ready sets</small></a>
+          <a role="listitem" href="shop.html#core">Core Scents<small>Our signature eight</small></a>
+        </div></div></li>
       <li><a href="our-story.html">Our Story</a></li>
       <li><a href="customer-love.html">Customer Love</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -31,15 +36,11 @@
     <button class="icon-btn burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg></button>
     <a class="logo" href="index.html" aria-label="Eldeva home">Eldeva</a>
     <div class="tools">
-      <button class="mood-t" id="moodBtn" aria-pressed="false" title="Light the candle for evening mode">
-        <span class="wick" aria-hidden="true"><span class="fl"></span><span class="jar"></span></span>
-        <span class="lbl" id="moodLbl">Light the candle</span>
-      </button>
       <button class="icon-btn" id="bagBtn" aria-label="Open your bag" aria-controls="drawer"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="bag-count" id="bagCount">0</span></button>
     </div>
   </div>
   <nav class="mnav" id="mnav" aria-label="Menu" hidden>
-    <a href="index.html">Home</a><a href="shop.html">Shop</a><a href="our-story.html">Our Story</a><a href="customer-love.html">Customer Love</a><a href="contact.html">Contact</a>
+    <a href="index.html">Home</a><a href="shop.html">Shop</a><a class="msub" href="shop.html#seasonal">Seasonal</a><a class="msub" href="shop.html#bundles">Bundles</a><a class="msub" href="shop.html#core">Core Scents</a><a href="our-story.html">Our Story</a><a href="customer-love.html">Customer Love</a><a href="contact.html">Contact</a>
   </nav>
 </header>
 
@@ -79,6 +80,7 @@
     <div class="allhead reveal">
       <div><p class="eyebrow">Eldeva collection</p><h2 style="margin-top:16px">Shop All</h2><p class="muted" style="margin-top:14px;max-width:44ch">Explore the full collection: calm fragrance, beautifully finished.</p></div>
       <div style="display:grid;gap:10px;justify-items:end">
+        <div class="tabs" id="lineTabs" role="group" aria-label="Filter by collection"></div>
         <div class="tabs" id="tabs" role="group" aria-label="Filter by type"></div>
         <div class="tabs" id="moodTabs" role="group" aria-label="Filter by mood"></div>
       </div>
@@ -92,8 +94,8 @@
   <div class="bgfx" data-fx="halo"></div>
   <div class="wrap">
     <div class="listbox reveal">
-      <p class="eyebrow" style="color:rgba(251,243,234,.75)">Join the Eldeva list</p>
-      <h2 style="margin-top:16px">First sniff of<br>new scents.</h2>
+      <p class="eyebrow" style="color:rgba(251,248,244,.75)">Join the Eldeva list</p>
+      <h2 style="margin-top:16px">First to know,<br>first to light.</h2>
       <p class="sub">New pours, restocks and the occasional candle-care tip. A couple of letters a month, never more.</p>
       <form id="listForm" novalidate>
         <label for="email" class="eyebrow">Email address</label>
@@ -116,7 +118,7 @@
       <div class="fsocial"><a href="https://www.instagram.com/eldeva_candle/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://www.facebook.com/profile.php?id=61576234643166" target="_blank" rel="noopener">Facebook ↗</a></div>
     </div>
     <div class="giant" aria-hidden="true">Eldeva</div>
-    <div class="fine"><span>© 2026 Eldeva · Privacy policy · Refund policy · Terms of service</span><span>Concept redesign mockup, not a live store</span></div>
+    <div class="fine"><span>© 2026 Eldeva · Privacy policy · Refund policy · Terms of service</span></div>
   </div>
 </footer>
 
@@ -135,6 +137,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="catalog.js"></script>
 <script src="site.js"></script>
 <script type="module" src="site-fx.js"></script>
 <script>
@@ -142,35 +145,38 @@
 (() => {
   const gbp = v => "£" + (Number.isInteger(v) ? v : v.toFixed(2));
   const byId = id => CATALOG.find(p => p.id === id);
-  $("#touch").innerHTML = [["burner", "Burners"], ["wick-cutter", "Wick Cutter"], ["snuffer", "Snuffer"], ["tealights", "Tealights"]].map(([id, label]) => {
+  $("#touch").innerHTML = [["burner", "Burners"], ["wick-cutter", "Wick Cutter"], ["snuffer", "Snuffer"], ["tealights", "Tealights"]].filter(([id]) => byId(id)).map(([id, label]) => {
     const p = byId(id);
-    return `<article class="tcard reveal"><div class="im"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
-      <div class="bd"><div><b>${label}</b><small>${p.name} · ${gbp(p.price)}</small></div><button class="plus" data-add="${p.name}" aria-label="Add ${p.name} to bag">+</button></div></article>`;
+    return `<article class="tcard reveal"><div class="im"><img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy"></div>
+      <div class="bd"><div><b>${label}</b><small>${esc(p.name)} · ${gbp(p.price)}</small></div><button class="plus" data-add="${esc(p.name)}" aria-label="Add ${esc(p.name)} to bag">+</button></div></article>`;
   }).join("");
   observeReveal($("#touch"));
 
   const TYPES = [["all", "All"], ["icons", "The Icons"], ["candles", "Candles"], ["diffusers", "Reed Diffusers"], ["melts", "Wax Melts"], ["gifts", "Gifts"], ["accessories", "Accessories"]];
   const MOODS = [["soft-mornings", "Soft Mornings"], ["hot-summer", "Hot Summer"], ["sunlit-citrus", "Sunlit Citrus"], ["golden-cafe", "Golden Cafe"]];
-  const match = f => p => f === "all" ? true : f === "icons" ? p.icon : (p.type === f || p.mood === f);
+  const LINES = [["core", "Core Scents"], ["seasonal", "Seasonal"], ["bundles", "Bundles"]];
+  const EMPTY = { seasonal: "Our seasonal pours are on their way. Join the list below to hear first." };
+  const match = f => p => f === "all" ? true : f === "icons" ? p.icon : (p.type === f || p.mood === f || p.line === f || (f === "seasonal" && !!p.season));
   const count = f => CATALOG.filter(match(f)).length;
   $("#tabs").innerHTML = TYPES.map(([f, l]) => `<button data-f="${f}">${l}<span class="ct">${count(f)}</span></button>`).join("");
+  $("#lineTabs").innerHTML = LINES.map(([f, l]) => `<button data-f="${f}">${l}<span class="ct">${count(f)}</span></button>`).join("");
   $("#moodTabs").innerHTML = MOODS.map(([f, l]) => `<button data-f="${f}">${l}<span class="ct">${count(f)}</span></button>`).join("");
 
   const card = (p, k) => `<article class="pcard" style="--k:${k}">
     <div class="im">${p.icon ? `<span class="tag">Customer favourite</span>` : ""}
-      <img src="${p.img}" alt="${p.name}" loading="lazy">${p.alt ? `<img class="alt" src="${p.alt}" alt="" loading="lazy">` : ""}</div>
-    <div class="row"><b>${p.name}</b><button class="plus" data-pick="${p.id}" aria-label="Add ${p.name} to bag">+</button></div>
-    <p class="meta">${p.meta}</p>
-    ${p.variants ? `<select data-v="${p.id}" aria-label="Choose a scent for ${p.name}">${p.variants.map(v => `<option>${v}</option>`).join("")}</select>` : ""}
+      <img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy">${p.alt ? `<img class="alt" src="${esc(p.alt)}" alt="" loading="lazy">` : ""}</div>
+    <div class="row"><b>${esc(p.name)}</b><button class="plus" data-pick="${p.id}" aria-label="Add ${esc(p.name)} to bag">+</button></div>
+    <p class="meta">${esc(p.meta || "")}</p>
+    ${p.variants ? `<select data-v="${p.id}" aria-label="Choose a scent for ${esc(p.name)}">${p.variants.map(v => `<option>${esc(v)}</option>`).join("")}</select>` : ""}
     <span class="pr">${p.variants ? "From " : ""}${gbp(p.price)}</span></article>`;
 
   let current = null;
   function show(f, scroll) {
-    if (![...TYPES, ...MOODS].some(([k]) => k === f)) f = "all";
-    $$("#tabs button, #moodTabs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.f === f));
+    if (![...TYPES, ...LINES, ...MOODS].some(([k]) => k === f)) f = "all";
+    $$("#tabs button, #lineTabs button, #moodTabs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.f === f));
     if (f !== current) {
       const list = CATALOG.filter(match(f));
-      $("#grid").innerHTML = list.length ? list.map(card).join("") : `<p class="empty">Nothing here yet. New pours are on the way.</p>`;
+      $("#grid").innerHTML = list.length ? list.map(card).join("") : `<p class="empty">${EMPTY[f] || "Nothing here yet. New pours are on the way."}</p>`;
       current = f;
     }
     if (scroll) scrollToY($("#all").getBoundingClientRect().top + scrollY - 90);

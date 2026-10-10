@@ -1,27 +1,11 @@
-/* Eldeva shared behaviour for the inner pages: bag, evening mode, menu, reveals, smooth scroll. */
+/* Eldeva shared behaviour for the inner pages: bag, menu, reveals, smooth scroll. */
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
-/* Catalogue: names, prices and photos from the live store */
-window.CATALOG = [
-  { id: "sweet-plum", name: "Sweet Plum", type: "candles", price: 30, img: "assets/sweet-plum.jpg", alt: "assets/products/sweet-plum-30cl-candle-alt.jpg", meta: "30cl soy candle · vibrant, juicy", mood: "hot-summer", icon: true },
-  { id: "white-sands", name: "White Sands", type: "candles", price: 30, img: "assets/white-sands.jpg", alt: "assets/products/white-sands-30cl-candle-alt.jpg", meta: "30cl soy candle · clean, airy", mood: "soft-mornings", icon: true },
-  { id: "lunas-secret", name: "Luna's Secret", type: "candles", price: 30, img: "assets/lunas-secret.jpg", alt: "assets/products/lunas-secret-30cl-candle-alt.jpg", meta: "30cl soy candle · bright, floral", mood: "sunlit-citrus" },
-  { id: "cozy-embrace", name: "Cozy Embrace", type: "candles", price: 30, img: "assets/cozy-embrace.jpg", alt: "assets/products/cozy-embrace-30cl-candle-alt.jpg", meta: "30cl soy candle · coffee, warm", mood: "golden-cafe" },
-  { id: "velvet-peony", name: "Velvet Peony", type: "diffusers", price: 30, img: "assets/velvet-peony.jpg", alt: "assets/products/velvet-peony-reed-diffuser-alt.jpg", meta: "Reed diffuser · plush, floral", mood: "sunlit-citrus", icon: true },
-  { id: "linen-breeze", name: "Linen Breeze", type: "diffusers", price: 30, img: "assets/linen-breeze.jpg", alt: "assets/products/linen-breeze-reed-diffiuser-alt.jpg", meta: "Reed diffuser · crisp, clean", mood: "soft-mornings" },
-  { id: "ivory-petal", name: "Ivory Petal", type: "diffusers", price: 30, img: "assets/ivory-petal.jpg", alt: "assets/products/ivory-petal-reed-diffuser-alt.jpg", meta: "Reed diffuser · soft white florals", mood: "soft-mornings" },
-  { id: "rustic-havana", name: "Rustic Havana", type: "diffusers", price: 30, img: "assets/rustic-havana.jpg", alt: "assets/products/rustic-havana-reed-diffuser-alt.jpg", meta: "Reed diffuser · warm, smoky", mood: "golden-cafe" },
-  { id: "refills", name: "Diffuser Refills with Reeds", type: "diffusers", price: 24.99, img: "assets/products/diffuser-reed-refills-0.jpg", meta: "Refill bottle and fresh reeds", variants: ["Velvet Peony", "Rustic Havana", "Linen Breeze", "Ivory Petal"] },
-  { id: "wax-melts", name: "Wax Melts", type: "melts", price: 8, img: "assets/wax-melts.jpg", alt: "assets/pages/shop-melts.jpg", meta: "Flower and butterfly shapes", variants: ["Luna's Secret", "Cozy Embrace", "White Sands", "Sweet Plum"] },
-  { id: "ritual-set", name: "The Wax Ritual Set", type: "gifts", price: 25.99, img: "assets/set-1.jpg", alt: "assets/pages/shop-gifts.jpg", meta: "Burner, tealight and melts, boxed", variants: ["Sweet Plum", "Maple Haze", "Whispers of Winter", "White Sands", "Cozy Embrace", "Luna's Secret"] },
-  { id: "burner", name: "Luxury Wax Burner", type: "accessories", price: 14.99, img: "assets/products/wax-burner-1-0.jpg", alt: "assets/pages/shop-burner.jpg", meta: "White ceramic, takes a tealight" },
-  { id: "wick-cutter", name: "Wick Cutter", type: "accessories", price: 8, img: "assets/candle-wick-cutter.jpg", meta: "Trim to 5mm before every burn" },
-  { id: "snuffer", name: "Snuffer", type: "accessories", price: 8, img: "assets/candle-snuffer.jpg", meta: "Put the flame out without smoke" },
-  { id: "tealights", name: "Unscented Tealights", type: "accessories", price: 3.5, img: "assets/products/unscented-tealights-clear-cup-0.jpg", meta: "Clear cup, for the wax burner" },
-  { id: "fibre-reeds", name: "Fibre Reeds", type: "accessories", price: 3.5, img: "assets/fibre-reeds.jpg", meta: "Fresh reeds for any diffuser" }
-];
+/* Catalogue: comes from catalog.js, which the admin (/admin) rewrites on every save */
+window.CATALOG = window.CATALOG || [];
+window.esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const byName = n => CATALOG.find(p => n === p.name || n.startsWith(p.name + " · "));
 const extra = {}; // items added on the homepage that aren't in the catalogue
 const priceOf = n => (byName(n) || {}).price ?? (extra[n] || {}).price ?? 30;
@@ -113,9 +97,9 @@ function renderBag() {
   $("#shipMsg").innerHTML = left > 0 ? `You're <b>${gbp(left)}</b> away from free UK delivery` : `You've unlocked <b>free UK delivery</b>`;
   $("#shipBar").style.width = Math.min(100, total / FREE * 100) + "%";
   $("#bagList").innerHTML = n === 0 ? `<li class="dr-empty" style="display:block;border:0">Your bag is empty. Something warm is waiting in the shop.</li>` :
-    [...bagItems].map(([name, q]) => `<li><img src="${imgOf(name)}" alt="">
-      <div><b>${name}</b><small>${gbp(priceOf(name))} each</small>
-        <div class="qty"><button data-q="-1" data-n="${name}" aria-label="One fewer ${name}">−</button><span>${q}</span><button data-q="1" data-n="${name}" aria-label="One more ${name}">+</button></div></div>
+    [...bagItems].map(([name, q]) => `<li><img src="${esc(imgOf(name))}" alt="">
+      <div><b>${esc(name)}</b><small>${gbp(priceOf(name))} each</small>
+        <div class="qty"><button data-q="-1" data-n="${esc(name)}" aria-label="One fewer ${esc(name)}">−</button><span>${q}</span><button data-q="1" data-n="${esc(name)}" aria-label="One more ${esc(name)}">+</button></div></div>
       <span class="dr-price">${gbp(q * priceOf(name))}</span></li>`).join("");
   $("#checkout").disabled = n === 0;
 }
@@ -150,17 +134,6 @@ mnav.addEventListener("click", e => { if (e.target.closest("a")) { mnav.hidden =
 const here = location.pathname.split("/").pop() || "index.html";
 $$(".pill ul a, .mnav a").forEach(a => { if (a.getAttribute("href") === here) a.setAttribute("aria-current", "page"); });
 
-/* Evening mode, remembered across pages */
-const moodBtn = $("#moodBtn"), moodLbl = $("#moodLbl");
-function setEvening(on) {
-  document.documentElement.dataset.mood = on ? "evening" : "day";
-  moodBtn.setAttribute("aria-pressed", on); moodLbl.textContent = on ? "Blow it out" : "Light the candle";
-  try { localStorage.setItem("eldeva-mood", on ? "evening" : "day"); } catch (e) {}
-  dispatchEvent(new Event("eldeva:mood"));
-}
-let saved = null; try { saved = localStorage.getItem("eldeva-mood"); } catch (e) {}
-setEvening(saved === "evening");
-moodBtn.addEventListener("click", () => setEvening(document.documentElement.dataset.mood !== "evening"));
 
 /* Newsletter */
 const listForm = $("#listForm");

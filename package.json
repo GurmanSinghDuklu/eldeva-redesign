@@ -1,0 +1,12 @@
+{
+  "name": "eldeva-site",
+  "private": true,
+  "description": "Eldeva website and admin. See the comment at the top of server.js.",
+  "engines": { "node": ">=22.9" },
+  "scripts": {
+    "dev": "node --watch --env-file-if-exists=.env server.js",
+    "start": "node --env-file-if-exists=.env server.js",
+    "add-user": "node server.js add-user",
+    "remove-user": "node server.js remove-user"
+  }
+}

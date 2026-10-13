@@ -2,3 +2,6 @@
 # admin logins (password hashes) stay on the machine that runs the site
 data/users.json
 *.tmp
+
+# secrets (Stripe, Royal Mail, email keys)
+.env

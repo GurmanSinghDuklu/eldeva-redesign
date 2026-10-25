@@ -8,8 +8,10 @@ window.CATALOG = window.CATALOG || [];
 window.esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const byName = n => CATALOG.find(p => n === p.name || n.startsWith(p.name + " · "));
 const extra = {}; // items added on the homepage that aren't in the catalogue
-const priceOf = n => (byName(n) || {}).price ?? (extra[n] || {}).price ?? 30;
-const imgOf = n => (byName(n) || {}).img || (extra[n] || {}).img || "assets/white-sands.jpg";
+// Bag names look like "Sweet Plum · 20cl · Rose". A product with sizes uses the size named, or its first size if none is.
+const sizeOf = n => { const p = byName(n); if (!p || !p.sizes) return null; const parts = n.slice(p.name.length).split(" · "); return p.sizes.find(s => parts.includes(s.name)) || p.sizes[0]; };
+const priceOf = n => sizeOf(n)?.price ?? (byName(n) || {}).price ?? (extra[n] || {}).price ?? 30;
+const imgOf = n => sizeOf(n)?.img || (byName(n) || {}).img || (extra[n] || {}).img || "assets/white-sands.jpg";
 
 /* Wrap words in spans so headings can rise in word by word */
 function wordify(el, cb) {

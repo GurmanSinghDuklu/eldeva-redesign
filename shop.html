@@ -167,8 +167,15 @@
       <img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy">${p.alt ? `<img class="alt" src="${esc(p.alt)}" alt="" loading="lazy">` : ""}</div>
     <div class="row"><b>${esc(p.name)}</b><button class="plus" data-pick="${p.id}" aria-label="Add ${esc(p.name)} to bag">+</button></div>
     <p class="meta">${esc(p.meta || "")}</p>
+    ${p.sizes ? `<select data-s="${p.id}" aria-label="Choose a size of ${esc(p.name)}">${p.sizes.map(s => `<option value="${esc(s.name)}">${esc(s.name)} · ${gbp(s.price)}</option>`).join("")}</select>` : ""}
     ${p.variants ? `<select data-v="${p.id}" aria-label="Choose a scent for ${esc(p.name)}">${p.variants.map(v => `<option>${esc(v)}</option>`).join("")}</select>` : ""}
-    <span class="pr">${p.variants ? "From " : ""}${gbp(p.price)}</span></article>`;
+    <span class="pr" data-pr="${p.id}">${priceText(p)}</span></article>`;
+  // With sizes, the price of the size picked (the menu starts on the first); otherwise the one price
+  const priceText = (p, size) => {
+    if (size) return gbp(size.price);
+    if (p.sizes) return gbp(p.sizes[0].price);
+    return (p.variants ? "From " : "") + gbp(p.price);
+  };
 
   let current = null;
   function show(f, scroll) {
@@ -186,7 +193,14 @@
     const t = e.target.closest("[data-f]");
     if (t) { history.replaceState(null, "", "#" + t.dataset.f); show(t.dataset.f, false); return; }
     const pick = e.target.closest("[data-pick]");
-    if (pick) { const sel = $(`select[data-v="${pick.dataset.pick}"]`), p = byId(pick.dataset.pick); addToBag(sel ? `${p.name} · ${sel.value}` : p.name); }
+    if (pick) {
+      const id = pick.dataset.pick, p = byId(id), size = $(`select[data-s="${id}"]`), scent = $(`select[data-v="${id}"]`);
+      addToBag([p.name, size && size.value, scent && scent.value].filter(Boolean).join(" · "));
+    }
+  });
+  document.addEventListener("change", e => { // show the chosen size's price
+    const s = e.target.closest("select[data-s]"); if (!s) return;
+    const p = byId(s.dataset.s); $(`[data-pr="${s.dataset.s}"]`).textContent = priceText(p, p.sizes.find(x => x.name === s.value));
   });
   addEventListener("hashchange", () => fromHash(true));
   fromHash(false);

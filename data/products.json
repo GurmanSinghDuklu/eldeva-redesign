@@ -6,7 +6,7 @@
     "price": 30,
     "meta": "30cl soy candle · vibrant, juicy",
     "img": "assets/sweet-plum.jpg",
-    "alt": "assets/products/sweet-plum-30cl-candle-alt.jpg",
+    "alt": "assets/products/sweet-plum-plums.jpg",
     "variants": [],
     "mood": "hot-summer",
     "line": "core",
@@ -21,7 +21,7 @@
     "price": 30,
     "meta": "30cl soy candle · clean, airy",
     "img": "assets/white-sands.jpg",
-    "alt": "assets/products/white-sands-30cl-candle-alt.jpg",
+    "alt": "assets/products/white-sands-coconut.jpg",
     "variants": [],
     "mood": "soft-mornings",
     "line": "core",
@@ -56,6 +56,161 @@
     "mood": "golden-cafe",
     "line": "core",
     "season": "autumn",
+    "icon": false,
+    "visible": true
+  },
+  {
+    "id": "whispers-of-winter",
+    "name": "Whispers of Winter",
+    "type": "candles",
+    "price": 27,
+    "meta": "20cl soy candle · pine, fireside",
+    "img": "assets/products/whispers-of-winter.jpg",
+    "alt": "",
+    "variants": [],
+    "mood": "",
+    "line": "",
+    "season": "winter",
+    "icon": false,
+    "visible": true,
+    "sizes": [
+      {
+        "id": "candle-20cl",
+        "name": "20cl candle",
+        "price": 27,
+        "sku": ""
+      },
+      {
+        "id": "wax-melts",
+        "name": "Wax melts",
+        "price": 8,
+        "sku": ""
+      },
+      {
+        "id": "candle-melts",
+        "name": "20cl candle + melts",
+        "price": 30,
+        "sku": ""
+      }
+    ]
+  },
+  {
+    "id": "sugar-spice",
+    "name": "Sugar & Spice",
+    "type": "candles",
+    "price": 27,
+    "meta": "20cl soy candle · gingerbread, sweet spice",
+    "img": "assets/products/sugar-spice.jpg",
+    "alt": "",
+    "variants": [],
+    "mood": "",
+    "line": "",
+    "season": "winter",
+    "icon": false,
+    "visible": true,
+    "sizes": [
+      {
+        "id": "candle-20cl",
+        "name": "20cl candle",
+        "price": 27,
+        "sku": ""
+      },
+      {
+        "id": "wax-melts",
+        "name": "Wax melts",
+        "price": 8,
+        "sku": ""
+      },
+      {
+        "id": "candle-melts",
+        "name": "20cl candle + melts",
+        "price": 30,
+        "sku": ""
+      }
+    ]
+  },
+  {
+    "id": "maple-haze",
+    "name": "Maple Haze",
+    "type": "candles",
+    "price": 27,
+    "meta": "20cl soy candle · maple, toasted pecan",
+    "img": "assets/products/maple-haze.jpg",
+    "alt": "",
+    "variants": [],
+    "mood": "golden-cafe",
+    "line": "",
+    "season": "winter",
+    "icon": false,
+    "visible": true,
+    "sizes": [
+      {
+        "id": "candle-20cl",
+        "name": "20cl candle",
+        "price": 27,
+        "sku": ""
+      },
+      {
+        "id": "wax-melts",
+        "name": "Wax melts",
+        "price": 8,
+        "sku": ""
+      },
+      {
+        "id": "candle-melts",
+        "name": "20cl candle + melts",
+        "price": 30,
+        "sku": ""
+      }
+    ]
+  },
+  {
+    "id": "crimson-eve",
+    "name": "Crimson Eve",
+    "type": "candles",
+    "price": 27,
+    "meta": "20cl soy candle · berries, orange, spice",
+    "img": "assets/products/crimson-eve.jpg",
+    "alt": "",
+    "variants": [],
+    "mood": "",
+    "line": "",
+    "season": "winter",
+    "icon": false,
+    "visible": true,
+    "sizes": [
+      {
+        "id": "candle-20cl",
+        "name": "20cl candle",
+        "price": 27,
+        "sku": ""
+      },
+      {
+        "id": "wax-melts",
+        "name": "Wax melts",
+        "price": 8,
+        "sku": ""
+      },
+      {
+        "id": "candle-melts",
+        "name": "20cl candle + melts",
+        "price": 30,
+        "sku": ""
+      }
+    ]
+  },
+  {
+    "id": "dusk-and-desire",
+    "name": "Dusk and Desire",
+    "type": "candles",
+    "price": 25,
+    "meta": "Soy candle · tobacco leaf, oak, amber",
+    "img": "assets/products/dusk-and-desire.jpg",
+    "alt": "",
+    "variants": [],
+    "mood": "golden-cafe",
+    "line": "",
+    "season": "",
     "icon": false,
     "visible": true
   },
@@ -174,6 +329,54 @@
       "White Sands",
       "Cozy Embrace",
       "Luna's Secret"
+    ],
+    "mood": "",
+    "line": "bundles",
+    "season": "",
+    "icon": false,
+    "visible": true
+  },
+  {
+    "id": "a-moment-to-remember",
+    "name": "A Moment to Remember",
+    "type": "gifts",
+    "price": 55,
+    "meta": "20cl candle, burner, 4 melts, tealights, wick cutter",
+    "img": "assets/products/a-moment-to-remember.jpg",
+    "alt": "",
+    "variants": [
+      "Whispers of Winter",
+      "Sugar & Spice",
+      "Maple Haze",
+      "Crimson Eve"
+    ],
+    "mood": "",
+    "line": "bundles",
+    "season": "",
+    "icon": false,
+    "visible": true
+  },
+  {
+    "id": "a-home-full-of-memories",
+    "name": "A Home Full of Memories",
+    "type": "gifts",
+    "price": 80,
+    "meta": "20cl candle, diffuser, burner, melts, tealights, snuffer",
+    "img": "assets/products/a-home-full-of-memories.jpg",
+    "alt": "",
+    "variants": [
+      "Whispers of Winter + Linen Breeze",
+      "Whispers of Winter + Velvet Peony",
+      "Whispers of Winter + Rustic Havana",
+      "Sugar & Spice + Linen Breeze",
+      "Sugar & Spice + Velvet Peony",
+      "Sugar & Spice + Rustic Havana",
+      "Maple Haze + Linen Breeze",
+      "Maple Haze + Velvet Peony",
+      "Maple Haze + Rustic Havana",
+      "Crimson Eve + Linen Breeze",
+      "Crimson Eve + Velvet Peony",
+      "Crimson Eve + Rustic Havana"
     ],
     "mood": "",
     "line": "bundles",

@@ -6,7 +6,7 @@ window.CATALOG = [
   "type": "candles",
   "price": 30,
   "img": "assets/sweet-plum.jpg",
-  "alt": "assets/products/sweet-plum-30cl-candle-alt.jpg",
+  "alt": "assets/products/sweet-plum-plums.jpg",
   "meta": "30cl soy candle · vibrant, juicy",
   "mood": "hot-summer",
   "icon": true,
@@ -19,7 +19,7 @@ window.CATALOG = [
   "type": "candles",
   "price": 30,
   "img": "assets/white-sands.jpg",
-  "alt": "assets/products/white-sands-30cl-candle-alt.jpg",
+  "alt": "assets/products/white-sands-coconut.jpg",
   "meta": "30cl soy candle · clean, airy",
   "mood": "soft-mornings",
   "icon": true,
@@ -49,6 +49,124 @@ window.CATALOG = [
   "mood": "golden-cafe",
   "line": "core",
   "season": "autumn"
+ },
+ {
+  "id": "whispers-of-winter",
+  "name": "Whispers of Winter",
+  "type": "candles",
+  "price": 27,
+  "img": "assets/products/whispers-of-winter.jpg",
+  "meta": "20cl soy candle · pine, fireside",
+  "sizes": [
+   {
+    "id": "candle-20cl",
+    "name": "20cl candle",
+    "price": 27
+   },
+   {
+    "id": "wax-melts",
+    "name": "Wax melts",
+    "price": 8
+   },
+   {
+    "id": "candle-melts",
+    "name": "20cl candle + melts",
+    "price": 30
+   }
+  ],
+  "from": 8,
+  "season": "winter"
+ },
+ {
+  "id": "sugar-spice",
+  "name": "Sugar & Spice",
+  "type": "candles",
+  "price": 27,
+  "img": "assets/products/sugar-spice.jpg",
+  "meta": "20cl soy candle · gingerbread, sweet spice",
+  "sizes": [
+   {
+    "id": "candle-20cl",
+    "name": "20cl candle",
+    "price": 27
+   },
+   {
+    "id": "wax-melts",
+    "name": "Wax melts",
+    "price": 8
+   },
+   {
+    "id": "candle-melts",
+    "name": "20cl candle + melts",
+    "price": 30
+   }
+  ],
+  "from": 8,
+  "season": "winter"
+ },
+ {
+  "id": "maple-haze",
+  "name": "Maple Haze",
+  "type": "candles",
+  "price": 27,
+  "img": "assets/products/maple-haze.jpg",
+  "meta": "20cl soy candle · maple, toasted pecan",
+  "sizes": [
+   {
+    "id": "candle-20cl",
+    "name": "20cl candle",
+    "price": 27
+   },
+   {
+    "id": "wax-melts",
+    "name": "Wax melts",
+    "price": 8
+   },
+   {
+    "id": "candle-melts",
+    "name": "20cl candle + melts",
+    "price": 30
+   }
+  ],
+  "from": 8,
+  "mood": "golden-cafe",
+  "season": "winter"
+ },
+ {
+  "id": "crimson-eve",
+  "name": "Crimson Eve",
+  "type": "candles",
+  "price": 27,
+  "img": "assets/products/crimson-eve.jpg",
+  "meta": "20cl soy candle · berries, orange, spice",
+  "sizes": [
+   {
+    "id": "candle-20cl",
+    "name": "20cl candle",
+    "price": 27
+   },
+   {
+    "id": "wax-melts",
+    "name": "Wax melts",
+    "price": 8
+   },
+   {
+    "id": "candle-melts",
+    "name": "20cl candle + melts",
+    "price": 30
+   }
+  ],
+  "from": 8,
+  "season": "winter"
+ },
+ {
+  "id": "dusk-and-desire",
+  "name": "Dusk and Desire",
+  "type": "candles",
+  "price": 25,
+  "img": "assets/products/dusk-and-desire.jpg",
+  "meta": "Soy candle · tobacco leaf, oak, amber",
+  "mood": "golden-cafe"
  },
  {
   "id": "velvet-peony",
@@ -139,6 +257,44 @@ window.CATALOG = [
    "White Sands",
    "Cozy Embrace",
    "Luna's Secret"
+  ],
+  "line": "bundles"
+ },
+ {
+  "id": "a-moment-to-remember",
+  "name": "A Moment to Remember",
+  "type": "gifts",
+  "price": 55,
+  "img": "assets/products/a-moment-to-remember.jpg",
+  "meta": "20cl candle, burner, 4 melts, tealights, wick cutter",
+  "variants": [
+   "Whispers of Winter",
+   "Sugar & Spice",
+   "Maple Haze",
+   "Crimson Eve"
+  ],
+  "line": "bundles"
+ },
+ {
+  "id": "a-home-full-of-memories",
+  "name": "A Home Full of Memories",
+  "type": "gifts",
+  "price": 80,
+  "img": "assets/products/a-home-full-of-memories.jpg",
+  "meta": "20cl candle, diffuser, burner, melts, tealights, snuffer",
+  "variants": [
+   "Whispers of Winter + Linen Breeze",
+   "Whispers of Winter + Velvet Peony",
+   "Whispers of Winter + Rustic Havana",
+   "Sugar & Spice + Linen Breeze",
+   "Sugar & Spice + Velvet Peony",
+   "Sugar & Spice + Rustic Havana",
+   "Maple Haze + Linen Breeze",
+   "Maple Haze + Velvet Peony",
+   "Maple Haze + Rustic Havana",
+   "Crimson Eve + Linen Breeze",
+   "Crimson Eve + Velvet Peony",
+   "Crimson Eve + Rustic Havana"
   ],
   "line": "bundles"
  },

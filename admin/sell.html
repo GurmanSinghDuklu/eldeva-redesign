@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Eldeva Sell</title>
+<link rel="icon" href="../assets/brand/eldeva-wordmark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<main class="login" id="login" hidden>
+  <form class="login-card" id="loginForm" novalidate>
+    <span class="wordmark" role="img" aria-label="Eldeva"></span>
+    <h1>Shop admin</h1>
+    <div class="form-err" id="loginErr" role="alert" hidden></div>
+    <div class="field"><label for="lu">Username</label><input class="input" id="lu" name="username" autocomplete="username" autocapitalize="none" required></div>
+    <div class="field"><label for="lp">Password</label><input class="input" id="lp" name="password" type="password" autocomplete="current-password" required></div>
+    <button class="btn" type="submit">Sign in</button>
+  </form>
+</main>
+<div id="app" hidden>
+  <header class="top">
+    <div class="top-in">
+      <a class="brand" href="dashboard.html" aria-label="Eldeva admin, overview"><span class="wordmark"></span></a>
+      <nav class="tabs" aria-label="Admin sections">
+        <a href="dashboard.html">Overview</a>
+        <a href="orders.html">Orders</a>
+        <a href="sell.html" aria-current="page">Sell</a>
+        <a href="events.html">Events</a>
+        <a href="stock.html">Stock</a>
+        <a href="./">Products</a>
+      </nav>
+      <p class="who">Signed in as <b id="who"></b></p>
+      <a class="link" href="../shop.html" target="_blank" rel="noopener">View the shop ↗</a>
+      <button class="btn btn--ghost btn--sm" id="logout" type="button">Sign out</button>
+    </div>
+  </header>
+  <main class="wrap sellwrap">
+    <div class="outbox" id="outbox" role="status" hidden></div>
+    <section id="choose" hidden>
+      <div class="head"><div><h1>Where are you selling?</h1><p class="sum">Pick the event once, and every sale today is saved against it.</p></div></div>
+      <div class="pickev" id="evList"></div>
+      <form class="card" id="newEv" novalidate>
+        <h3>Add an event</h3>
+        <p class="hint">You can add pitch fees and other costs later on the Events page.</p>
+        <div class="form-err" id="neErr" role="alert" hidden></div>
+        <div class="row2">
+          <div class="field"><label for="ne-name">Event name</label><input class="input" id="ne-name" name="name" maxlength="80" placeholder="Leeds Christmas Market" required></div>
+          <div class="field"><label for="ne-loc">Location</label><input class="input" id="ne-loc" name="location" maxlength="80" placeholder="Millennium Square, Leeds"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="ne-date">Date</label><input class="input" id="ne-date" name="date" type="date" required></div>
+          <div class="field"><label for="ne-fee">Pitch fee</label><span class="money-in"><input class="input" id="ne-fee" name="pitchFee" inputmode="decimal" placeholder="0"></span></div>
+        </div>
+        <button class="btn" type="submit">Start selling</button>
+      </form>
+    </section>
+
+    <section id="selling" hidden>
+      <div class="card evbar">
+        <div class="where"><b id="evName"></b><span id="evMeta"></span></div>
+        <button class="btn btn--ghost btn--sm" type="button" id="changeEv">Change</button>
+        <div class="today"><span id="evToday"></span><button class="btn btn--ghost btn--sm" type="button" id="todayBtn">Sales &amp; cash up</button></div>
+      </div>
+      <div id="last" aria-live="polite"></div>
+      <div class="sell">
+        <div>
+          <div class="seg cats" id="cats" role="group" aria-label="Show"></div>
+          <div class="pgrid" id="grid"></div>
+        </div>
+        <aside class="card basket" id="basket" aria-labelledby="bTitle">
+          <div class="basket-head"><h2 id="bTitle">This sale</h2><button class="linkbtn" type="button" id="clearB" hidden>Clear</button><button class="btn btn--ghost btn--sm x" type="button" id="closeB">Close</button></div>
+          <div id="bBody"></div>
+        </aside>
+      </div>
+      <div class="scrim" id="scrim"></div>
+      <button class="bbar" type="button" id="bbar" hidden><span id="bbarText"></span><span class="go">Take payment</span></button>
+    </section>
+  </main>
+</div>
+
+<dialog class="confirm pick" id="pick" aria-labelledby="pkTitle">
+  <h2 id="pkTitle"></h2>
+  <div class="chips" id="pkSizes" role="group" aria-label="Size" hidden></div>
+  <p class="help" style="margin-bottom:14px" id="pkHelp">Tap + for each one sold.</p>
+  <ul id="pkList"></ul>
+  <div class="acts"><button class="btn" type="button" id="pkDone">Done</button></div>
+</dialog>
+<dialog class="confirm" id="priceDlg" aria-labelledby="prTitle">
+  <form id="priceForm" novalidate>
+    <h2 id="prTitle">Change the price</h2>
+    <p id="prText" style="margin-bottom:16px"></p>
+    <div class="field"><label for="prVal">Price for each one</label><span class="money-in"><input class="input" id="prVal" inputmode="decimal" required></span><p class="err" id="prErr" hidden></p></div>
+    <span class="lbl" style="display:block;margin-bottom:8px">Why</span>
+    <div class="chips" id="prWhy"><button type="button">Friends &amp; family</button><button type="button">Damaged</button><button type="button">Special deal</button><button type="button">End of day</button></div>
+    <div class="acts"><button class="btn btn--ghost" type="button" id="prReset">Back to full price</button><button class="btn" type="submit">Use this price</button></div>
+  </form>
+</dialog>
+<dialog class="sheet" id="today" aria-labelledby="tdTitle">
+  <div class="sheet-in">
+    <div class="sheet-head"><div><h2 id="tdTitle">Sales &amp; cash up</h2><p class="sub" id="tdSub"></p></div><button class="btn btn--ghost btn--sm x" type="button" data-close>Close</button></div>
+    <div class="sheet-body cashup" id="tdBody"></div>
+    <div class="sheet-foot"><span class="spacer"></span><button class="btn" type="button" id="cuSave">Save cash up</button></div>
+  </div>
+</dialog>
+<dialog class="confirm" id="confirm" aria-labelledby="cfTitle">
+  <h2 id="cfTitle"></h2>
+  <p id="cfText"></p>
+  <div class="acts"><button class="btn btn--ghost" type="button" value="no">Cancel</button><button class="btn" type="button" value="yes" id="cfYes">OK</button></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="common.js"></script>
+<script src="pricing.js"></script>
+<script src="sell.js"></script>
+</body>
+</html>

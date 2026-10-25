@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Eldeva Events</title>
+<link rel="icon" href="../assets/brand/eldeva-wordmark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<main class="login" id="login" hidden>
+  <form class="login-card" id="loginForm" novalidate>
+    <span class="wordmark" role="img" aria-label="Eldeva"></span>
+    <h1>Shop admin</h1>
+    <div class="form-err" id="loginErr" role="alert" hidden></div>
+    <div class="field"><label for="lu">Username</label><input class="input" id="lu" name="username" autocomplete="username" autocapitalize="none" required></div>
+    <div class="field"><label for="lp">Password</label><input class="input" id="lp" name="password" type="password" autocomplete="current-password" required></div>
+    <button class="btn" type="submit">Sign in</button>
+  </form>
+</main>
+<div id="app" hidden>
+  <header class="top">
+    <div class="top-in">
+      <a class="brand" href="dashboard.html" aria-label="Eldeva admin, overview"><span class="wordmark"></span></a>
+      <nav class="tabs" aria-label="Admin sections">
+        <a href="dashboard.html">Overview</a>
+        <a href="orders.html">Orders</a>
+        <a href="sell.html">Sell</a>
+        <a href="events.html" aria-current="page">Events</a>
+        <a href="stock.html">Stock</a>
+        <a href="./">Products</a>
+      </nav>
+      <p class="who">Signed in as <b id="who"></b></p>
+      <a class="link" href="../shop.html" target="_blank" rel="noopener">View the shop ↗</a>
+      <button class="btn btn--ghost btn--sm" id="logout" type="button">Sign out</button>
+    </div>
+  </header>
+  <main class="wrap">
+    <div class="head">
+      <div><h1>Events</h1><p class="sum" id="sum">Loading…</p></div>
+      <button class="btn btn--ghost" type="button" id="dealsBtn">Deals</button>
+      <button class="btn" type="button" id="eventsBtn" style="margin-left:0">Manage events</button>
+    </div>
+    <div id="dash" hidden>
+      <div class="filters">
+        <div class="field"><label for="fRange">Dates</label><select class="input" id="fRange">
+          <option value="month">This month</option><option value="3m">Last 3 months</option><option value="year">This year</option><option value="12m" selected>Last 12 months</option><option value="all">All time</option></select></div>
+        <div class="field"><label for="fEvent">Event</label><select class="input" id="fEvent"></select></div>
+        <div class="field"><label for="fLoc">Location</label><select class="input" id="fLoc"></select></div>
+        <div class="field"><label for="fProd">Product</label><select class="input" id="fProd"></select></div>
+        <div class="field"><label for="fScent">Fragrance</label><select class="input" id="fScent"></select></div>
+      </div>
+      <p class="fnote" id="fnote"></p>
+      <div class="stats stats6" id="kpis"></div>
+      <div class="card chart">
+        <div class="chart-head"><h3>Takings</h3><p id="cSum"></p>
+          <div class="gran" id="gran" role="group" aria-label="Group by"><button type="button" data-g="day">Day</button><button type="button" data-g="week">Week</button><button type="button" data-g="month" aria-pressed="true">Month</button><button type="button" data-g="year">Year</button></div></div>
+        <div class="plot" id="plot"></div>
+        <details class="as-table"><summary>Show as a table</summary><div id="cTable"></div></details>
+      </div>
+      <section class="sec"><div class="sec-head"><h2>Event by event</h2><p class="note">Profit is takings, minus what the items cost to make, minus the pitch fee and other costs. Click an event to look at it on its own.</p></div>
+        <div class="card"><div class="tbl-wrap" id="evTable"></div></div></section>
+      <section class="sec"><div class="sec-head"><h2>What sells</h2></div>
+        <div class="cols2">
+          <div class="card"><h3>Best sellers</h3><p class="hint">Items sold, by product.</p><ol class="hbars" id="bestP"></ol></div>
+          <div class="card"><h3>Favourite fragrances</h3><p class="hint">Items sold, across candles, diffusers, melts and sets.</p><ol class="hbars" id="bestF"></ol></div>
+        </div>
+        <div class="card" style="margin-top:14px"><h3>Through the year</h3><p class="hint">Items sold of each fragrance by month. Darker means more.</p><div class="tbl-wrap" id="heat"></div></div>
+      </section>
+      <section class="sec"><div class="sec-head"><h2>Deals and payments</h2></div>
+        <div class="cols2">
+          <div class="card"><h3>Deals and discounts</h3><p class="hint">How often each was used, and what it cost you.</p><div class="tbl-wrap" id="dealTable"></div></div>
+          <div class="card"><h3>How people paid</h3><p class="hint" id="payHint"></p><ol class="hbars" id="pays"></ol></div>
+        </div>
+      </section>
+      <section class="sec"><div class="sec-head"><h2>Stock to watch</h2><a class="btn btn--ghost btn--sm" href="stock.html">Open stock</a></div>
+        <div class="card"><ol class="hbars" id="lowStock"></ol></div></section>
+    </div>
+    <div class="empty-card" id="none" hidden><h2>No sales yet</h2><p>Sales you take on the Sell page will show up here, event by event.</p><a class="btn" href="sell.html">Start selling</a></div>
+  </main>
+</div>
+
+<dialog class="sheet" id="evSheet" aria-labelledby="esTitle">
+  <div class="sheet-in">
+    <div class="sheet-head"><h2 id="esTitle">Events</h2><button class="btn btn--ghost btn--sm x" type="button" data-close>Close</button></div>
+    <div class="sheet-body" id="esBody"></div>
+    <div class="sheet-foot" id="esFoot"></div>
+  </div>
+</dialog>
+<dialog class="sheet" id="dlSheet" aria-labelledby="dsTitle">
+  <div class="sheet-in">
+    <div class="sheet-head"><h2 id="dsTitle">Deals</h2><button class="btn btn--ghost btn--sm x" type="button" data-close>Close</button></div>
+    <div class="sheet-body" id="dsBody"></div>
+    <div class="sheet-foot" id="dsFoot"></div>
+  </div>
+</dialog>
+<dialog class="confirm" id="confirm" aria-labelledby="cfTitle">
+  <h2 id="cfTitle"></h2>
+  <p id="cfText"></p>
+  <div class="acts"><button class="btn btn--ghost" type="button" value="no">Cancel</button><button class="btn" type="button" value="yes" id="cfYes">OK</button></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="common.js"></script>
+<script src="pricing.js"></script>
+<script src="events.js"></script>
+</body>
+</html>

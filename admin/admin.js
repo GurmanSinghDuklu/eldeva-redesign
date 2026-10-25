@@ -1,11 +1,6 @@
-/* Eldeva product manager: sign in, list, add, edit, reorder and delete products. Talks to server.js at /api. */
+/* Eldeva product manager: list, add, edit, reorder and delete products. Talks to server.js at /api.
+   Helpers and sign in are in common.js. */
 "use strict";
-const $ = (s, r = document) => r.querySelector(s);
-const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-const src = p => "../" + p; // product photo paths are relative to the site root
-const gbp = v => "£" + (Number.isInteger(v) ? v : v.toFixed(2));
-
 const LABELS = {
   type: { candles: "Candles", diffusers: "Reed diffusers", melts: "Wax melts", gifts: "Gifts", accessories: "Accessories" },
   line: { "": "None", core: "Core scents", bundles: "Bundles" },
@@ -13,63 +8,8 @@ const LABELS = {
   mood: { "": "None", "soft-mornings": "Soft Mornings", "hot-summer": "Hot Summer", "sunlit-citrus": "Sunlit Citrus", "golden-cafe": "Golden Cafe" }
 };
 
-let products = [], editing = null, snapshot = "", signedIn = false;
+let products = [], editing = null, snapshot = "";
 
-/* ---------- api ---------- */
-async function api(path, opts = {}) {
-  const res = await fetch("/api" + path, {
-    method: opts.method || "GET", credentials: "same-origin",
-    headers: opts.body ? { "Content-Type": "application/json" } : {},
-    body: opts.body ? JSON.stringify(opts.body) : undefined
-  });
-  let data = {};
-  try { data = await res.json(); } catch (e) {}
-  if (res.status === 401 && path !== "/login" && path !== "/me") { showLogin(); throw Object.assign(new Error("Your session ended. Please sign in again."), { quiet: true }); }
-  if (!res.ok) throw Object.assign(new Error(data.error || "Something went wrong. Try again."), { field: data.field });
-  return data;
-}
-
-/* ---------- toast + confirm ---------- */
-let tt;
-function toast(msg, bad) {
-  const t = $("#toast"); t.textContent = msg; t.classList.toggle("bad", !!bad); t.classList.add("show");
-  clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), bad ? 4200 : 2400);
-}
-function confirmBox(title, text, yes) {
-  const d = $("#confirm"); $("#cfTitle").textContent = title; $("#cfText").textContent = text; $("#cfYes").textContent = yes;
-  d.showModal();
-  return new Promise(resolve => {
-    const done = v => { d.close(); d.removeEventListener("click", onClick); resolve(v); };
-    const onClick = e => { const b = e.target.closest("button[value]"); if (b) done(b.value === "yes"); else if (e.target === d) done(false); };
-    d.addEventListener("click", onClick);
-    d.addEventListener("cancel", e => { e.preventDefault(); done(false); }, { once: true });
-  });
-}
-
-/* ---------- sign in ---------- */
-function showLogin() {
-  signedIn = false;
-  $("#app").hidden = true; $("#login").hidden = false;
-  if ($("#editor").open) $("#editor").close();
-  if (!$("#loginForm").contains(document.activeElement)) $("#lu").focus();
-}
-$("#loginForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const f = e.target, btn = f.querySelector("button"), err = $("#loginErr");
-  err.hidden = true; btn.disabled = true; btn.textContent = "Signing in…";
-  try {
-    const { user } = await api("/login", { method: "POST", body: { username: f.username.value.trim(), password: f.password.value } });
-    f.password.value = ""; start(user);
-  } catch (ex) { err.textContent = ex.message; err.hidden = false; }
-  finally { btn.disabled = false; btn.textContent = "Sign in"; }
-});
-$("#logout").addEventListener("click", async () => { try { await api("/logout", { method: "POST" }); } catch (e) {} showLogin(); });
-
-async function start(user) {
-  signedIn = true;
-  $("#who").textContent = user; $("#login").hidden = true; $("#app").hidden = false;
-  await load();
-}
 async function load() {
   try { products = await api("/products"); render(); }
   catch (e) { if (!e.quiet) { $("#list").innerHTML = `<li class="empty"><h2>Couldn't load the products</h2><p>${esc(e.message)}</p></li>`; $("#sum").textContent = ""; } }
@@ -97,7 +37,7 @@ function render() {
     return `<li class="prow${p.visible ? "" : " is-hidden"}" data-id="${esc(p.id)}">
       <img class="thumb" src="${esc(src(p.img))}" alt="" loading="lazy">
       <div class="pinfo"><button class="pname" type="button" data-edit>${esc(p.name)}</button>
-        <p class="pmeta">${esc(LABELS.type[p.type] || p.type)}, ${p.variants.length ? "from " : ""}${gbp(p.price)}${p.variants.length ? `, ${p.variants.length} scents` : ""}</p>
+        <p class="pmeta">${esc(LABELS.type[p.type] || p.type)}, ${p.sizes?.length ? `${p.sizes.length} sizes from ${gbp(Math.min(...p.sizes.map(s => s.price)))}` : `${p.variants.length ? "from " : ""}${gbp(p.price)}`}${p.variants.length ? `, ${p.variants.length} scents` : ""}</p>
         ${b.length ? `<div class="badges">${b.join("")}</div>` : ""}</div>
       <div class="pact">
         ${filtered ? "" : `<button class="move" type="button" data-move="-1" aria-label="Move ${esc(p.name)} up" ${i === 0 ? "disabled" : ""}>↑</button>
@@ -124,6 +64,7 @@ $("#list").addEventListener("click", async e => {
 
 /* ---------- editor ---------- */
 const form = $("#edForm"), photos = { img: "", alt: "" };
+let sizes = []; // [{ id, name, price, sku, img }] while editing; id is kept so stock counts follow a renamed size
 function setPhoto(key, path) {
   photos[key] = path;
   const box = $(`[data-photo="${key}"] .pvwrap`);
@@ -131,9 +72,11 @@ function setPhoto(key, path) {
   const clear = $(`[data-photo="${key}"] [data-clear]`); if (clear) clear.hidden = !path;
 }
 const state = () => JSON.stringify({ ...readForm(), img: photos.img, alt: photos.alt });
+const cleanMoney = v => String(v ?? "").replace(/[£\s,]/g, "");
 function readForm() {
   return {
-    name: form.name.value, price: form.price.value.replace(/[£\s,]/g, ""), type: form.type.value, meta: form.meta.value,
+    name: form.name.value, price: form.price.value.replace(/[£\s,]/g, ""), type: form.type.value, meta: form.meta.value, sku: form.sku.value,
+    sizes: sizes.map(s => ({ id: s.id || "", name: s.name.trim(), price: cleanMoney(s.price), sku: s.sku.trim(), img: s.img || "" })),
     variants: form.variants.value.split("\n").map(s => s.trim()).filter(Boolean),
     line: form.line.value, season: form.season.value, mood: form.mood.value, icon: form.icon.checked, visible: form.visible.checked
   };
@@ -144,7 +87,8 @@ function openEditor(p) {
   $("#edTitle").textContent = p ? "Edit product" : "Add a product";
   $("#delBtn").hidden = !p;
   form.name.value = p?.name || ""; form.price.value = p ? String(p.price) : ""; form.type.value = p?.type || "candles";
-  form.meta.value = p?.meta || ""; form.variants.value = (p?.variants || []).join("\n");
+  form.meta.value = p?.meta || ""; form.variants.value = (p?.variants || []).join("\n"); form.sku.value = p?.sku || "";
+  sizes = (p?.sizes || []).map(s => ({ id: s.id, name: s.name, price: String(s.price), sku: s.sku || "", img: s.img || "" })); renderSizes();
   form.line.value = p?.line || ""; form.season.value = p?.season || ""; form.mood.value = p?.mood || "";
   form.icon.checked = !!p?.icon; form.visible.checked = p ? p.visible : true;
   setPhoto("img", p?.img || ""); setPhoto("alt", p?.alt || "");
@@ -191,9 +135,13 @@ form.addEventListener("submit", async e => {
   e.preventDefault(); clearErrors();
   const body = { ...readForm(), img: photos.img, alt: photos.alt }, btn = $("#saveBtn");
   // quick checks before asking the server
-  const local = !body.name.trim() ? ["name", "Give the product a name."] : !/^\d+(\.\d{1,2})?$/.test(body.price) ? ["price", "Enter a price like 30 or 24.99."] : !body.img ? ["img", "Add a main photo."] : null;
+  const isMoney = /^\d+(\.\d{1,2})?$/, badSize = body.sizes.find(s => !s.name || !isMoney.test(s.price));
+  const local = !body.name.trim() ? ["name", "Give the product a name."]
+    : badSize ? ["sizes", badSize.name ? `Give ${badSize.name} a price like 30 or 24.99.` : "Give every size a name, like 30cl."]
+    : !body.sizes.length && !isMoney.test(body.price) ? ["price", "Enter a price like 30 or 24.99."] : !body.img ? ["img", "Add a main photo."] : null;
   if (local) return showFieldError(...local);
-  body.price = Number(body.price);
+  body.sizes.forEach(s => { s.price = Number(s.price); });
+  body.price = body.sizes.length ? body.sizes[0].price : Number(body.price);
   btn.disabled = true; btn.textContent = "Saving…";
   try {
     const saved = await api(editing ? `/products/${encodeURIComponent(editing.id)}` : "/products", { method: editing ? "PUT" : "POST", body });
@@ -222,7 +170,44 @@ $("#delBtn").addEventListener("click", async () => {
   } catch (ex) { if (!ex.quiet) toast(ex.message, true); }
 });
 
+/* ---------- sizes ---------- */
+function renderSizes() {
+  $("#sizes").innerHTML = sizes.map((s, i) => `<li class="size" data-i="${i}">
+    <button class="ph${s.img ? " has" : ""}" type="button" data-sphoto style="${s.img ? `background-image:url('${esc(src(s.img))}')` : ""}" aria-label="${s.img ? "Change" : "Add"} a photo for ${esc(s.name || "this size")}">${s.img ? "" : "Photo"}</button>
+    <input class="input" data-sf="name" value="${esc(s.name)}" maxlength="30" placeholder="Size, e.g. 30cl" aria-label="Size name">
+    <span class="money-in"><input class="input" data-sf="price" value="${esc(s.price)}" inputmode="decimal" placeholder="Price" aria-label="Price for ${esc(s.name || "this size")}"></span>
+    <input class="input sku" data-sf="sku" value="${esc(s.sku)}" maxlength="40" placeholder="Code (optional)" aria-label="Code for ${esc(s.name || "this size")}">
+    <span class="acts"><button class="move" type="button" data-sup aria-label="Move ${esc(s.name || "this size")} up" ${i ? "" : "disabled"}>↑</button><button class="move" type="button" data-sdel aria-label="Remove ${esc(s.name || "this size")}">✕</button></span>
+    ${i === 0 && sizes.length > 1 ? `<span class="first">Shown first, and used when no size is picked.</span>` : ""}</li>`).join("");
+  const has = sizes.length > 0;
+  form.price.closest(".field").hidden = has;
+  $("#addSize").textContent = has ? "Add another size" : "Add a size";
+  $("#sizeHelp").textContent = has ? "The price above is replaced by these. The first size is the one shown first in the shop." : "Only needed if it comes in more than one size, like 30cl and 20cl. Each size has its own price, and can have its own code and photo.";
+}
+$("#addSize").addEventListener("click", () => {
+  if (!sizes.length && form.price.value.trim()) sizes.push({ id: "", name: "", price: form.price.value.trim(), sku: "", img: "" }); // keep the current price as the first size
+  else sizes.push({ id: "", name: "", price: "", sku: "", img: "" });
+  renderSizes(); $(`#sizes li:last-child [data-sf="name"]`).focus();
+});
+$("#sizes").addEventListener("input", e => { const f = e.target.dataset.sf; if (f) sizes[e.target.closest(".size").dataset.i][f] = e.target.value; });
+let sizePhotoFor = -1;
+$("#sizes").addEventListener("click", e => {
+  const li = e.target.closest(".size"); if (!li) return;
+  const i = Number(li.dataset.i);
+  if (e.target.closest("[data-sdel]")) { sizes.splice(i, 1); renderSizes(); return; }
+  if (e.target.closest("[data-sup]")) { [sizes[i - 1], sizes[i]] = [sizes[i], sizes[i - 1]]; renderSizes(); $(`#sizes [data-i="${i - 1}"] [data-sup]`)?.focus(); return; }
+  if (e.target.closest("[data-sphoto]")) { sizePhotoFor = i; $("#sizeFile").click(); }
+});
+$("#sizeFile").addEventListener("change", async e => {
+  const file = e.target.files[0], i = sizePhotoFor; e.target.value = ""; if (!file || !sizes[i]) return;
+  const btn = $(`#sizes [data-i="${i}"] [data-sphoto]`); btn.classList.add("busy");
+  try {
+    const { path } = await api("/upload", { method: "POST", body: { data: await prepare(file), name: `${form.name.value} ${sizes[i].name}`.trim() || "photo" } });
+    sizes[i].img = path; renderSizes();
+  } catch (ex) { if (!ex.quiet) showFieldError("sizes", ex.message); btn.classList.remove("busy"); }
+});
+
 addEventListener("beforeunload", e => { if ($("#editor").open && state() !== snapshot) e.preventDefault(); });
 
 /* ---------- boot ---------- */
-api("/me").then(d => { if (!signedIn) start(d.user); }).catch(() => { if (!signedIn) showLogin(); });
+boot(load);

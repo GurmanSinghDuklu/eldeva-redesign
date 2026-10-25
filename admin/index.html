@@ -9,148 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600&display=swap">
-<style>
-/* Radius rule: buttons and badges are pills, inputs 12px, cards and sheets 20px. */
-:root{
-  --cream:#F7F2EA;--ivory:#FBF8F4;--beige:#E7D8C9;--choc:#4A2E24;--brown:#6A4A3C;--gold:#C9A77A;
-  --line:#E0CFBE;--err:#9E3B2C;--ok:#4F6B45;
-  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Montserrat",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
-  --ease:cubic-bezier(.22,1,.36,1);color-scheme:light;
-}
-*,*::before,*::after{box-sizing:border-box}
-[hidden]{display:none!important}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;min-height:100dvh;background:var(--cream);color:var(--choc);font:400 15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;line-height:1.1}
-p{margin:0}
-button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--choc);outline-offset:3px}
-.wordmark{display:block;width:118px;aspect-ratio:712/198;background:var(--choc);-webkit-mask:url("../assets/brand/eldeva-wordmark.png") center/contain no-repeat;mask:url("../assets/brand/eldeva-wordmark.png") center/contain no-repeat}
-
-/* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 24px;border-radius:999px;border:1px solid var(--choc);background:var(--choc);color:var(--ivory);
-  font:500 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background-color .25s,color .25s,transform .2s var(--ease)}
-.btn:hover{background:#3A241C}
-.btn:active{transform:scale(.98)}
-.btn[disabled]{opacity:.55;cursor:progress}
-.btn--ghost{background:transparent;color:var(--choc)}
-.btn--ghost:hover{background:var(--beige)}
-.btn--danger{background:transparent;border-color:transparent;color:var(--err);padding-inline:8px}
-.btn--danger:hover{background:transparent;text-decoration:underline}
-.btn--sm{min-height:38px;padding:0 16px;font-size:11px}
-
-/* sign in */
-.login{min-height:100dvh;display:grid;place-items:center;padding:24px 16px}
-.login-card{width:min(420px,100%);background:var(--ivory);border:1px solid var(--line);border-radius:20px;padding:40px 32px;box-shadow:0 30px 60px -40px rgba(74,46,36,.5)}
-.login-card .wordmark{margin:0 auto 14px}
-.login-card h1{text-align:center;font-size:30px;margin-bottom:26px}
-.login-card .btn{width:100%;margin-top:8px}
-
-/* fields */
-.field{display:grid;gap:7px;margin-bottom:18px}
-.field>label,.field>.lbl{font:600 11px/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--brown)}
-.field .req{color:var(--brown);font-weight:400;letter-spacing:0;text-transform:none}
-.input{width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;transition:border-color .2s,box-shadow .2s}
-textarea.input{min-height:110px;resize:vertical;line-height:1.5}
-select.input{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%234A2E24' stroke-width='1.5'/%3E%3C/svg%3E") right 14px center no-repeat;padding-right:38px}
-.input:focus{outline:none;border-color:var(--choc);box-shadow:0 0 0 3px rgba(74,46,36,.12)}
-.input[aria-invalid="true"]{border-color:var(--err)}
-.help{font-size:13px;color:var(--brown)}
-.err{font-size:13px;font-weight:500;color:var(--err)}
-.form-err{padding:12px 14px;border-radius:12px;background:#F6E4DF;color:var(--err);font-size:14px;margin-bottom:18px}
-
-/* top bar */
-.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--cream) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top-in{max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px}
-.top .who{margin-left:auto;font-size:13px;color:var(--brown)}
-.top .who b{font-weight:600;color:var(--choc)}
-.top a.link{font-size:13px;font-weight:500;color:var(--choc);white-space:nowrap}
-
-/* product list */
-.wrap{max-width:1080px;margin:0 auto;padding:40px 20px 80px}
-.head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 24px;margin-bottom:28px}
-.head h1{font-size:clamp(38px,5vw,52px)}
-.head .sum{color:var(--brown);margin-top:6px}
-.head .btn{margin-left:auto}
-.tools{display:grid;grid-template-columns:1fr 220px;gap:14px;margin-bottom:20px}
-.tools .field{margin:0}
-.plist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.prow{display:grid;grid-template-columns:76px 1fr auto;align-items:center;gap:18px;padding:12px 14px 12px 12px;background:var(--ivory);border:1px solid var(--line);border-radius:20px;transition:border-color .2s,box-shadow .2s}
-.prow:hover{border-color:#D3BEA8;box-shadow:0 14px 30px -24px rgba(74,46,36,.45)}
-.prow.is-hidden{background:transparent}
-.prow.is-hidden .thumb{opacity:.55}
-.thumb{width:76px;height:76px;border-radius:14px;object-fit:cover;background:var(--beige);display:block}
-.pinfo{min-width:0}
-.pname{font:500 23px/1.15 var(--serif);background:none;border:0;padding:0;cursor:pointer;text-align:left}
-.pname:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
-.pmeta{font-size:13.5px;color:var(--brown);margin-top:3px}
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.badge{font:600 10.5px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:var(--beige);color:var(--choc)}
-.badge--hidden{background:var(--choc);color:var(--ivory)}
-.badge--fav{background:transparent;box-shadow:inset 0 0 0 1px var(--gold);color:var(--brown)}
-.pact{display:flex;align-items:center;gap:6px}
-.move{width:38px;height:38px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:16px;line-height:1;display:grid;place-items:center;transition:background-color .2s}
-.move:hover{background:var(--beige)}
-.move[disabled]{opacity:.3;cursor:default;background:transparent}
-.empty{padding:56px 20px;text-align:center;border:1px dashed var(--line);border-radius:20px}
-.empty h2{font-size:28px;margin-bottom:8px}
-.empty p{color:var(--brown)}
-.skel{height:102px;border-radius:20px;background:linear-gradient(90deg,var(--ivory),#F1E8DC,var(--ivory));background-size:200% 100%;animation:sk 1.4s ease-in-out infinite}
-@keyframes sk{to{background-position:-200% 0}}
-
-/* editor sheet */
-dialog{padding:0;border:0;color:var(--choc)}
-dialog::backdrop{background:rgba(47,29,22,.42);backdrop-filter:blur(2px)}
-.sheet{margin:0 0 0 auto;width:min(600px,100%);max-width:100%;height:100dvh;max-height:100dvh;background:var(--ivory);box-shadow:-30px 0 80px -30px rgba(47,29,22,.5)}
-.sheet[open]{animation:sheetIn .45s var(--ease)}
-@keyframes sheetIn{from{transform:translateX(40px);opacity:0}}
-.sheet form{height:100%;display:grid;grid-template-rows:auto 1fr auto}
-.sheet-head{padding:22px 28px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px}
-.sheet-head h2{font-size:32px}
-.sheet-head .x{margin-left:auto}
-.sheet-body{overflow-y:auto;padding:26px 28px 10px;overscroll-behavior:contain}
-.sheet-body h3{font-size:22px;margin:8px 0 16px;padding-top:20px;border-top:1px solid var(--line)}
-.sheet-body h3:first-of-type{border-top:0;padding-top:0;margin-top:0}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.sheet-foot{padding:16px 28px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;background:var(--ivory)}
-.sheet-foot .spacer{flex:1}
-.photo{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center}
-.photo .pv{width:120px;height:150px;border-radius:14px;background:var(--beige);object-fit:cover;display:block}
-.photo .pv-empty{width:120px;height:150px;border-radius:14px;border:1px dashed #CDB8A3;display:grid;place-items:center;text-align:center;font-size:12px;color:var(--brown);padding:10px}
-.photo .acts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.photo.busy .pv,.photo.busy .pv-empty{opacity:.5}
-.check{display:flex;align-items:flex-start;gap:12px;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;margin-bottom:10px}
-.check input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--choc);flex:none}
-.check b{display:block;font-weight:500}
-.check span{font-size:13px;color:var(--brown)}
-
-/* confirm + toast */
-.confirm{width:min(420px,calc(100% - 32px));border-radius:20px;background:var(--ivory);padding:28px}
-.confirm h2{font-size:28px;margin-bottom:10px}
-.confirm p{color:var(--brown);margin-bottom:22px}
-.confirm .acts{display:flex;justify-content:flex-end;gap:10px}
-.btn--del{background:var(--err);border-color:var(--err)}
-.btn--del:hover{background:#86301F}
-.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,calc(100% + 40px));z-index:100;background:var(--choc);color:var(--ivory);padding:14px 22px;border-radius:999px;font-weight:500;font-size:14px;box-shadow:0 14px 34px -14px rgba(47,29,22,.6);transition:transform .45s var(--ease);max-width:calc(100% - 32px)}
-.toast.show{transform:translate(-50%,0)}
-.toast.bad{background:var(--err)}
-
-@media (max-width:720px){
-  .top .who{display:none}
-  .top a.link{margin-left:auto}
-  .wrap{padding:28px 16px 80px}
-  .head .btn{margin-left:0;width:100%}
-  .tools{grid-template-columns:1fr}
-  .prow{grid-template-columns:64px 1fr;gap:14px}
-  .thumb{width:64px;height:64px}
-  .pact{grid-column:1/-1;justify-content:flex-end;border-top:1px solid var(--line);padding-top:10px}
-  .sheet-head,.sheet-body,.sheet-foot{padding-left:18px;padding-right:18px}
-  .row2{grid-template-columns:1fr}
-  .photo{grid-template-columns:96px 1fr}
-  .photo .pv,.photo .pv-empty{width:96px;height:120px}
-}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+<link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
@@ -168,7 +27,15 @@ dialog::backdrop{background:rgba(47,29,22,.42);backdrop-filter:blur(2px)}
 <div id="app" hidden>
   <header class="top">
     <div class="top-in">
-      <span class="wordmark" role="img" aria-label="Eldeva"></span>
+      <a class="brand" href="dashboard.html" aria-label="Eldeva admin, overview"><span class="wordmark"></span></a>
+      <nav class="tabs" aria-label="Admin sections">
+        <a href="dashboard.html">Overview</a>
+        <a href="orders.html">Orders</a>
+        <a href="sell.html">Sell</a>
+        <a href="events.html">Events</a>
+        <a href="stock.html">Stock</a>
+        <a href="./" aria-current="page">Products</a>
+      </nav>
       <p class="who">Signed in as <b id="who"></b></p>
       <a class="link" href="../shop.html" target="_blank" rel="noopener">View the shop ↗</a>
       <button class="btn btn--ghost btn--sm" id="logout" type="button">Sign out</button>
@@ -203,6 +70,16 @@ dialog::backdrop{background:rgba(47,29,22,.42);backdrop-filter:blur(2px)}
         <div class="field"><label for="f-type">Category</label><select class="input" id="f-type" name="type"></select><p class="err" data-err="type" hidden></p></div>
       </div>
       <div class="field"><label for="f-meta">Short description</label><input class="input" id="f-meta" name="meta" maxlength="140"><p class="help">One line under the name in the shop, for example “30cl soy candle, coffee and warm notes”.</p><p class="err" data-err="meta" hidden></p></div>
+      <div class="field"><label for="f-sku">Product code</label><input class="input" id="f-sku" name="sku" maxlength="40" placeholder="Optional, for example SP-30"><p class="err" data-err="sku" hidden></p></div>
+
+      <h3>Sizes and prices</h3>
+      <div class="field">
+        <ol class="sizes" id="sizes"></ol>
+        <button class="btn btn--ghost btn--sm" type="button" id="addSize">Add a size</button>
+        <p class="help" id="sizeHelp">Only needed if it comes in more than one size, like 30cl and 20cl. Each size has its own price, and can have its own code and photo.</p>
+        <p class="err" data-err="sizes" hidden></p>
+        <input type="file" id="sizeFile" accept="image/jpeg,image/png,image/webp" hidden>
+      </div>
 
       <h3>Photos</h3>
       <div class="field">
@@ -252,6 +129,7 @@ dialog::backdrop{background:rgba(47,29,22,.42);backdrop-filter:blur(2px)}
 </dialog>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="common.js"></script>
 <script src="admin.js"></script>
 </body>
 </html>

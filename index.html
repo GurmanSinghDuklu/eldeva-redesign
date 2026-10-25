@@ -125,7 +125,7 @@ header.site.stuck{top:calc(env(safe-area-inset-top,0px) + 12px)}
 @keyframes portalIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
 .portal .pslide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
 .portal .pslide.is-on{opacity:1}
-.portal video{width:100%;height:100%;object-fit:cover;transform:scale(1.35)}
+.portal video{width:100%;height:100%;object-fit:cover;object-position:88% 50%;transform:scale(1.35) translateY(-7%)} /* candle sits right of centre in the footage */
 .portal .pslide img{width:100%;height:100%;object-fit:cover;transform:scale(1.14);transition:transform 0s linear 1.2s}
 .portal .pslide.is-on img{transform:scale(1.02);transition:transform 9s cubic-bezier(.2,.6,.3,1)}
 .portal::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(43,26,20,.5),rgba(43,26,20,.2) 70%)}
@@ -329,9 +329,9 @@ section.pad{padding-block:clamp(72px,10vw,140px)}
   radial-gradient(60% 160% at 95% 70%,var(--c3),transparent 70%),var(--c4)}
 .mrow:hover .mrow-fill,.mrow:focus-visible .mrow-fill{clip-path:inset(0 0 0 0)}
 .mrow:hover,.mrow:focus-visible{color:var(--c-ink)}
-.msw{width:clamp(46px,5vw,66px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 34% 30%,var(--c1),var(--c2) 45%,var(--c3) 90%);
+.msw{width:clamp(56px,6vw,84px);aspect-ratio:1;border-radius:50%;object-fit:cover;background:radial-gradient(circle at 34% 30%,var(--c1),var(--c2) 45%,var(--c3) 90%);
   box-shadow:inset 0 0 0 1px rgba(74,46,36,.12),0 14px 30px -16px rgba(74,46,36,.55);transition:transform .9s var(--ease)}
-.mrow:hover .msw{transform:scale(1.14) rotate(24deg)}
+.mrow:hover .msw{transform:scale(1.14)}
 .mname{font:400 clamp(40px,6.2vw,92px)/1 var(--serif);letter-spacing:-.025em;transition:transform .9s var(--ease)}
 .mrow:hover .mname{transform:translateX(14px)}
 .mmeta{display:grid;gap:6px;text-align:right}
@@ -356,6 +356,33 @@ section.pad{padding-block:clamp(72px,10vw,140px)}
 .steps b{font:500 23px/1.15 var(--serif);display:block}
 .steps span{font-size:14px;color:var(--ink-soft)}
 .steps em{font-style:normal;font-variant-numeric:tabular-nums;font-weight:500}
+
+/* instagram: a row of posts the arrows move, never the scroll position */
+.social .head h2 em{font-style:italic;color:var(--amber)}
+.ig-side{display:grid;gap:22px;justify-items:start;max-width:40ch}
+.ig-view{overflow:clip}
+.ig-track{--per:4;--gap:clamp(12px,1.6vw,22px);display:flex;gap:var(--gap);list-style:none;margin:0;padding:0;transition:transform .9s var(--ease)}
+.ig-card{flex:0 0 calc((100% - (var(--per) - 1) * var(--gap)) / var(--per))}
+.ig-card a{position:relative;display:block;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--bg-2)}
+.ig-card img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease)}
+.ig-card a:hover img,.ig-card a:focus-visible img{transform:scale(1.05)}
+.ig-over{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:12px;background:rgba(43,26,20,.4);color:#FBF8F4;
+  font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;opacity:0;transition:opacity .5s var(--ease)}
+.ig-card a:hover .ig-over,.ig-card a:focus-visible .ig-over{opacity:1}
+.ig-over svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.6}
+.ig-nav{display:flex;align-items:center;gap:12px;margin-top:28px}
+.ig-prog{flex:1;height:2px;margin-right:12px;border-radius:2px;background:var(--line);overflow:hidden}
+.ig-prog i{display:block;height:100%;background:var(--ink);transform-origin:left;transform:scaleX(0);transition:transform .9s var(--ease)}
+.ig-arrow{width:56px;height:56px;border-radius:50%;border:1px solid var(--ink);background:none;color:var(--ink);display:grid;place-items:center;cursor:pointer;
+  transition:background-color .3s,color .3s,opacity .3s,transform .3s var(--ease)}
+.ig-arrow:hover:not(:disabled){background:var(--ink);color:var(--bg)}
+.ig-arrow:active:not(:disabled){transform:scale(.94)}
+.ig-arrow:disabled{opacity:.3;cursor:default}
+.ig-arrow svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:1060px){.ig-track{--per:3}}
+@media (max-width:760px){.ig-track{--per:2}}
+@media (max-width:560px){.ig-track{--per:1.25}}
+@media (prefers-reduced-motion:reduce){.ig-track,.ig-prog i{transition:none}}
 
 /* dusk: the page fades from day into evening before the dark finale */
 .dusk{position:relative;z-index:1;height:clamp(200px,24vw,340px);margin-top:clamp(-140px,-10vw,-80px);pointer-events:none;background:linear-gradient(180deg,color-mix(in srgb,var(--bg-2) 0%,transparent) 0%,color-mix(in srgb,#B89878 70%,transparent) 30%,#6A4E3B 58%,#2C2019 82%,#3A241C 100%)}
@@ -512,14 +539,15 @@ footer.site .fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:
     <div class="pslide is-on"><video id="heroVid" autoplay muted loop playsinline preload="auto" poster="media/beach-poster.jpg">
       <source src="media/beach.mp4" type="video/mp4">
     </video></div>
-    <div class="pslide"><img src="assets/lifestyle/fireplace-cozy-embrace.jpg" alt="" decoding="async" style="object-position:50% 40%"></div>
-    <div class="pslide"><img src="assets/lifestyle/portrait-sweet-plum-close-up.jpg" alt="" loading="lazy" decoding="async" style="object-position:50% 45%"></div>
-    <div class="pslide"><img src="assets/lifestyle/bedroom-morning-lunas-secret.jpg" alt="" loading="lazy" decoding="async" style="object-position:40% 35%"></div>
-    <div class="pslide"><img src="assets/lifestyle/beach-white-sands.jpg" alt="" loading="lazy" decoding="async" style="object-position:50% 40%"></div>
+    <div class="pslide"><img src="assets/products/whispers-of-winter.jpg" alt="" decoding="async" style="object-position:45% 58%"></div>
+    <div class="pslide"><img src="assets/products/sugar-spice.jpg" alt="" loading="lazy" decoding="async" style="object-position:50% 55%"></div>
+    <div class="pslide"><img src="assets/products/maple-haze.jpg" alt="" loading="lazy" decoding="async" style="object-position:45% 55%"></div>
+    <div class="pslide"><img src="assets/products/crimson-eve.jpg" alt="" loading="lazy" decoding="async" style="object-position:48% 50%"></div>
+    <div class="pslide"><img src="assets/products/a-moment-to-remember.jpg" alt="" loading="lazy" decoding="async" style="object-position:48% 50%"></div>
   </div>
   <div class="wrap hero-copy" id="heroCopy">
     <div class="hslides" aria-live="off">
-    <div class="hslide is-on" id="hs0" role="group" aria-roledescription="slide" aria-label="1 of 5">
+    <div class="hslide is-on" id="hs0" role="group" aria-roledescription="slide" aria-label="1 of 6">
       <p class="eyebrow fade-in" style="--d:.9s">Small-batch home fragrance, made in the UK</p>
       <h1 class="split hh" data-split>Every fragrance becomes a story,<br> <em>every story becomes a memory.</em></h1>
       <p class="lede fade-in" style="--d:1.6s">Soy wax candles, wax melts and reed diffusers, poured by our family in small batches. Light one and the room goes quiet.</p>
@@ -528,41 +556,51 @@ footer.site .fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:
         <a class="btn btn--glass" href="#moods">Find your scent</a>
       </div>
     </div>
-    <div class="hslide" id="hs1" role="group" aria-roledescription="slide" aria-label="2 of 5: Autumn" aria-hidden="true" inert>
-      <p class="eyebrow">The Autumn edit</p>
-      <h2 class="hh">Cozy Embrace,<br> <em>for fireside evenings.</em></h2>
-      <p class="lede">Coffee and warmth for the first cold nights in. A 30cl soy candle, poured by hand in small batches.</p>
-      <div class="cta">
-        <button class="btn btn--light" type="button" data-add="Cozy Embrace">Add to bag · £30</button>
-        <a class="btn btn--glass" href="shop.html#seasonal">Shop seasonal</a>
-      </div>
-    </div>
-    <div class="hslide" id="hs2" role="group" aria-roledescription="slide" aria-label="3 of 5: Winter" aria-hidden="true" inert>
+    <div class="hslide" id="hs1" role="group" aria-roledescription="slide" aria-label="2 of 6: Whispers of Winter" aria-hidden="true" inert>
       <p class="eyebrow">The Winter edit</p>
-      <h2 class="hh">Sweet Plum,<br> <em>for long winter nights.</em></h2>
-      <p class="lede">Vibrant and juicy, a rich glow for the darkest months. A 30cl soy candle, poured by hand in small batches.</p>
+      <h2 class="hh">Whispers of Winter,<br> <em>for nights by the fire.</em></h2>
+      <p class="lede">Snow-dusted pine and a crackling hearth, with a curl of dried orange and cinnamon. Cosy from the very first light.</p>
       <div class="cta">
-        <button class="btn btn--light" type="button" data-add="Sweet Plum">Add to bag · £30</button>
-        <a class="btn btn--glass" href="shop.html#seasonal">Shop seasonal</a>
+        <button class="btn btn--light" type="button" data-add="Whispers of Winter · 20cl candle">Add to bag · £27</button>
+        <a class="btn btn--glass" href="shop.html#seasonal">Shop winter candles</a>
       </div>
     </div>
-    <div class="hslide" id="hs3" role="group" aria-roledescription="slide" aria-label="4 of 5: Spring" aria-hidden="true" inert>
-      <p class="eyebrow">The Spring edit</p>
-      <h2 class="hh">Luna's Secret,<br> <em>for slow spring mornings.</em></h2>
-      <p class="lede">Bright and floral, like the first open window of the year. A 30cl soy candle, poured by hand in small batches.</p>
+    <div class="hslide" id="hs2" role="group" aria-roledescription="slide" aria-label="3 of 6: Sugar &amp; Spice" aria-hidden="true" inert>
+      <p class="eyebrow">The Winter edit</p>
+      <h2 class="hh">Sugar &amp; Spice,<br> <em>for baking-day afternoons.</em></h2>
+      <p class="lede">Gingerbread warm from the oven, brown sugar and a dusting of sweet spice. The kitchen in December, bottled.</p>
       <div class="cta">
-        <button class="btn btn--light" type="button" data-add="Luna's Secret">Add to bag · £30</button>
-        <a class="btn btn--glass" href="shop.html#seasonal">Shop seasonal</a>
+        <button class="btn btn--light" type="button" data-add="Sugar &amp; Spice · 20cl candle">Add to bag · £27</button>
+        <a class="btn btn--glass" href="shop.html#seasonal">Shop winter candles</a>
       </div>
     </div>
-    <div class="hslide" id="hs4" role="group" aria-roledescription="slide" aria-label="5 of 5: Summer" aria-hidden="true" inert>
-      <p class="eyebrow">The Summer edit</p>
-      <h2 class="hh">White Sands,<br> <em>for golden-hour evenings.</em></h2>
-      <p class="lede">Clean and airy, the beach carried home. A 30cl soy candle, poured by hand in small batches.</p>
+    <div class="hslide" id="hs3" role="group" aria-roledescription="slide" aria-label="4 of 6: Maple Haze" aria-hidden="true" inert>
+      <p class="eyebrow">The Winter edit</p>
+      <h2 class="hh">Maple Haze,<br> <em>for slow weekend mornings.</em></h2>
+      <p class="lede">Golden maple poured over toasted pecans, softened with cinnamon and cream. Breakfast in bed, in candle form.</p>
       <div class="cta">
-        <button class="btn btn--light" type="button" data-add="White Sands">Add to bag · £30</button>
-        <a class="btn btn--glass" href="shop.html#seasonal">Shop seasonal</a>
+        <button class="btn btn--light" type="button" data-add="Maple Haze · 20cl candle">Add to bag · £27</button>
+        <a class="btn btn--glass" href="shop.html#seasonal">Shop winter candles</a>
       </div>
+    </div>
+    <div class="hslide" id="hs4" role="group" aria-roledescription="slide" aria-label="5 of 6: Crimson Eve" aria-hidden="true" inert>
+      <p class="eyebrow">The Winter edit</p>
+      <h2 class="hh">Crimson Eve,<br> <em>for the night before.</em></h2>
+      <p class="lede">Cranberry and juicy orange, warmed through with clove and star anise. Glowing, festive and a little bit merry.</p>
+      <div class="cta">
+        <button class="btn btn--light" type="button" data-add="Crimson Eve · 20cl candle">Add to bag · £27</button>
+        <a class="btn btn--glass" href="shop.html#seasonal">Shop winter candles</a>
+      </div>
+    </div>
+    <div class="hslide" id="hs5" role="group" aria-roledescription="slide" aria-label="6 of 6: Made for gifting" aria-hidden="true" inert>
+      <p class="eyebrow">Made for gifting</p>
+      <h2 class="hh">A Moment to Remember,<br> <em>a little winter ritual.</em></h2>
+      <p class="lede">A 20cl candle, wax burner, melts, tealights and a wick cutter, boxed and ready to give. Worth £68.99.</p>
+      <div class="cta">
+        <button class="btn btn--light" type="button" data-add="A Moment to Remember · Whispers of Winter">Add to bag · £55</button>
+        <a class="btn btn--glass" href="shop.html#bundles">Shop bundles</a>
+      </div>
+    </div>
     </div>
     </div>
   </div>
@@ -570,8 +608,8 @@ footer.site .fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:
     <button class="harrow harrow--prev" type="button" data-dir="-1" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
     <button class="harrow harrow--next" type="button" data-dir="1" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
     <div class="hbar">
-      <span class="hcount" aria-hidden="true"><b id="hcur">01</b> / 05</span>
-      <div class="hdots"><button class="hdot on" type="button" aria-controls="hs0" aria-label="Every fragrance becomes a story" aria-current="true"><i></i></button><button class="hdot" type="button" aria-controls="hs1" aria-label="Autumn: Cozy Embrace"><i></i></button><button class="hdot" type="button" aria-controls="hs2" aria-label="Winter: Sweet Plum"><i></i></button><button class="hdot" type="button" aria-controls="hs3" aria-label="Spring: Luna's Secret"><i></i></button><button class="hdot" type="button" aria-controls="hs4" aria-label="Summer: White Sands"><i></i></button></div>
+      <span class="hcount" aria-hidden="true"><b id="hcur">01</b> / 06</span>
+      <div class="hdots"><button class="hdot on" type="button" aria-controls="hs0" aria-label="Every fragrance becomes a story" aria-current="true"><i></i></button><button class="hdot" type="button" aria-controls="hs1" aria-label="Winter: Whispers of Winter"><i></i></button><button class="hdot" type="button" aria-controls="hs2" aria-label="Winter: Sugar &amp; Spice"><i></i></button><button class="hdot" type="button" aria-controls="hs3" aria-label="Winter: Maple Haze"><i></i></button><button class="hdot" type="button" aria-controls="hs4" aria-label="Winter: Crimson Eve"><i></i></button><button class="hdot" type="button" aria-controls="hs5" aria-label="Gifting: A Moment to Remember"><i></i></button></div>
     </div>
   </div>
 </section>
@@ -659,25 +697,25 @@ footer.site .fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:
     </div>
     <div class="moods">
       <button class="mrow reveal" data-jump="1" style="--c1:#FFFFFF;--c2:#EADBC4;--c3:#D9BD97;--c4:#F1E6D6;--c-ink:#4A2E24">
-        <span class="mrow-fill" aria-hidden="true"></span><span class="msw" aria-hidden="true"></span>
+        <span class="mrow-fill" aria-hidden="true"></span><img class="msw" src="assets/lifestyle/thumb/mood-soft-mornings.jpg" alt="" loading="lazy" decoding="async">
         <span class="mname">Soft mornings</span>
         <span class="mmeta"><span class="mnotes">clean · airy · musky</span><span class="mscents">Linen Breeze, White Sands, Ivory Petal</span></span>
         <span class="mgo" aria-hidden="true">→</span>
       </button>
       <button class="mrow reveal" data-jump="0" style="--c1:#C87C9A;--c2:#E7A47C;--c3:#6E2F4B;--c4:#8E3A5C;--c-ink:#FBEFE6">
-        <span class="mrow-fill" aria-hidden="true"></span><span class="msw" aria-hidden="true"></span>
+        <span class="mrow-fill" aria-hidden="true"></span><img class="msw" src="assets/lifestyle/thumb/mood-hot-summer.jpg" alt="" loading="lazy" decoding="async">
         <span class="mname">Hot summer</span>
         <span class="mmeta"><span class="mnotes">vibrant · juicy · sun-warmed</span><span class="mscents">Sweet Plum</span></span>
         <span class="mgo" aria-hidden="true">→</span>
       </button>
       <button class="mrow reveal" data-jump="2" style="--c1:#FBEAD0;--c2:#F6D98A;--c3:#E9A15B;--c4:#F2CD8F;--c-ink:#4A2E24">
-        <span class="mrow-fill" aria-hidden="true"></span><span class="msw" aria-hidden="true"></span>
+        <span class="mrow-fill" aria-hidden="true"></span><img class="msw" src="assets/lifestyle/thumb/mood-sunlit-citrus.jpg" alt="" loading="lazy" decoding="async">
         <span class="mname">Sunlit citrus</span>
         <span class="mmeta"><span class="mnotes">bright · floral · fresh</span><span class="mscents">Luna's Secret, Velvet Peony</span></span>
         <span class="mgo" aria-hidden="true">→</span>
       </button>
       <button class="mrow reveal" data-jump="3" style="--c1:#C8935E;--c2:#8A5A35;--c3:#3B2619;--c4:#5A3A24;--c-ink:#F5E8D8">
-        <span class="mrow-fill" aria-hidden="true"></span><span class="msw" aria-hidden="true"></span>
+        <span class="mrow-fill" aria-hidden="true"></span><img class="msw" src="assets/lifestyle/thumb/mood-golden-cafe.jpg" alt="" loading="lazy" decoding="async">
         <span class="mname">Golden cafe</span>
         <span class="mmeta"><span class="mnotes">coffee · warm · indulgent</span><span class="mscents">Maple Haze, Cozy Embrace</span></span>
         <span class="mgo" aria-hidden="true">→</span>
@@ -707,6 +745,25 @@ footer.site .fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px">
         <button class="btn" data-add="The Wax Ritual Set">Add the Ritual Set · £25.99</button>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="pad social" id="social" aria-roledescription="carousel" aria-label="Eldeva on Instagram">
+  <div class="wrap">
+    <div class="head reveal">
+      <div><p class="eyebrow">@eldeva_candle</p><h2>Little moments,<br><em>shared on Instagram.</em></h2></div>
+      <div class="ig-side">
+        <p class="sub">New pours, behind-the-scenes moments and slow evenings at home. Come and say hello.</p>
+        <a class="btn" href="https://www.instagram.com/eldeva_candle/" target="_blank" rel="noopener">Follow on Instagram ↗</a>
+      </div>
+    </div>
+    <div class="ig-view reveal"><ul class="ig-track" id="igTrack"></ul></div>
+    <div class="ig-nav">
+      <div class="ig-prog" aria-hidden="true"><i id="igBar"></i></div>
+      <button class="ig-arrow" type="button" id="igPrev" aria-label="Previous posts"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="ig-arrow" type="button" id="igNext" aria-label="Next posts"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
   </div>
 </section>
@@ -925,7 +982,7 @@ const vidIO = new IntersectionObserver(es => es.forEach(e => {
 vidIO.observe($("#hero")); vidIO.observe(film);
 if (reduce) heroVid.pause();
 
-/* Hero carousel: the slogan, then a seasonal scent per slide. Arrows, dots, arrow keys and swipes move it; a 5s timer advances it while it's on screen. */
+/* Hero carousel: the slogan, a winter candle per slide, then the gift set. Arrows, dots, arrow keys and swipes move it; a 5s timer advances it while it's on screen. */
 let heroSlide = 0, heroInView = true;
 const hero = $("#hero"), hSlides = $$(".hslide"), pSlides = $$(".pslide"), hDots = $$(".hdot"), hCur = $("#hcur");
 function goHero(n) {
@@ -958,6 +1015,58 @@ hero.addEventListener("touchend", e => {
   if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) goHero(heroSlide + (dx < 0 ? 1 : -1));
 }, { passive: true });
 new IntersectionObserver(([e]) => hero.classList.toggle("paused", !e.isIntersecting), { threshold: 0.4 }).observe(hero);
+
+/* Instagram feed: posts in a row, moved by the arrows, arrow keys or a swipe. Each post is [photo, alt text, link];
+   until real posts are added they all link to the profile. */
+(() => {
+  const IG = "https://www.instagram.com/eldeva_candle/";
+  const FEED = [
+    ["cosy-evening", "A lit Eldeva candle and reed diffuser beside an open book"],
+    ["crimson-eve", "Crimson Eve candle with cranberries, oranges and wax melts"],
+    ["making-melts", "Hands holding freshly made heart-shaped wax melts"],
+    ["white-sands", "White Sands candle with coconut and white flowers"],
+    ["golden-cafe", "A candle and reed diffuser on a café table with coffee beans"],
+    ["sugar-spice", "Sugar & Spice candle among gingerbread biscuits"],
+    ["autumn-lake", "Three Eldeva candles on their gift box beside an autumn lake"],
+    ["maple-haze", "Maple Haze candle with pancakes, pecans and maple syrup"],
+    ["sweet-plum", "Sweet Plum candle with plums and blackberries"],
+    ["morning-light", "Candle, reed diffuser and wax melts in morning light"]
+  ];
+  const GLYPH = `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r=".6"/></svg>`;
+  const view = $(".ig-view"), track = $("#igTrack"), prev = $("#igPrev"), next = $("#igNext"), bar = $("#igBar");
+  track.innerHTML = FEED.map(([f, alt, href = IG]) => `<li class="ig-card"><a href="${href}" target="_blank" rel="noopener" aria-label="${alt}, on Instagram">
+    <img src="assets/social/${f}.jpg" alt="" width="640" height="800" loading="lazy" decoding="async"><span class="ig-over" aria-hidden="true">${GLYPH}View on Instagram</span></a></li>`).join("");
+  const cards = $$(".ig-card", track);
+  let at = 0;
+  const step = () => cards[1].offsetLeft - cards[0].offsetLeft;
+  function go(n) {
+    const s = step(), end = cards.at(-1).offsetLeft - cards[0].offsetLeft + cards.at(-1).offsetWidth, room = Math.max(0, end - view.clientWidth);
+    const last = Math.ceil(room / s - 0.01);
+    at = clamp(n, 0, last);
+    const x = Math.min(at * s, room);
+    track.style.transform = `translateX(${-x}px)`;
+    bar.style.transform = `scaleX(${((x + view.clientWidth) / end).toFixed(4)})`;
+    prev.disabled = at === 0; next.disabled = at === last;
+  }
+  prev.addEventListener("click", () => go(at - 1));
+  next.addEventListener("click", () => go(at + 1));
+  $("#social").addEventListener("keydown", e => {
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { go(at + (e.key === "ArrowRight" ? 1 : -1)); e.preventDefault(); }
+  });
+  view.addEventListener("focusin", e => { // tabbing to a post off to the side brings it into view
+    const i = cards.indexOf(e.target.closest(".ig-card")), shown = Math.max(1, Math.floor(view.clientWidth / step() + 0.01));
+    if (i >= 0 && (i < at || i >= at + shown)) go(i < at ? i : i - shown + 1);
+  });
+  let sx = null, sy = 0;
+  view.addEventListener("touchstart", e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  view.addEventListener("touchend", e => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(at + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+  addEventListener("resize", () => go(at));
+  go(0);
+})();
 
 
 /* Lookbook */
@@ -1019,9 +1128,12 @@ if (matchMedia("(pointer:fine)").matches && !reduce) {
 }
 
 /* Bag: add, adjust, and a free-delivery progress bar (free UK delivery over £55) */
-const PRICES = { "The Wax Ritual Set": 25.99 };
+const PRICES = { "The Wax Ritual Set": 25.99, "A Moment to Remember · Whispers of Winter": 55 };
 const IMGS = Object.fromEntries(window.PRODUCTS.map(p => [p.name, `assets/${p.img}.jpg`]));
-IMGS["The Wax Ritual Set"] = "assets/set-1.jpg"; IMGS["Signature 30cl candle"] = "assets/lifestyle/thumb/studio-signature.jpg";
+IMGS["The Wax Ritual Set"] = "assets/set-1.jpg"; IMGS["A Moment to Remember · Whispers of Winter"] = "assets/products/a-moment-to-remember.jpg";
+// the winter candles on the hero slides (20cl, £27)
+[["Whispers of Winter", "whispers-of-winter"], ["Sugar & Spice", "sugar-spice"], ["Maple Haze", "maple-haze"], ["Crimson Eve", "crimson-eve"]]
+  .forEach(([n, f]) => { PRICES[n + " · 20cl candle"] = 27; IMGS[n + " · 20cl candle"] = `assets/products/${f}.jpg`; }); IMGS["Signature 30cl candle"] = "assets/lifestyle/thumb/studio-signature.jpg";
 const priceOf = n => PRICES[n] ?? 30;
 const FREE = 55, gbp = v => "£" + v.toFixed(2);
 const bagItems = new Map();

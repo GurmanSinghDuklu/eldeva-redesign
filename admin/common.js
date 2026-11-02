@@ -24,6 +24,11 @@ async function api(path, opts = {}) {
   return data;
 }
 
+/* ---------- test copy banner ---------- */
+fetch("/api/mode").then(r => r.json()).then(d => {
+  if (d.test) document.body.insertAdjacentHTML("afterbegin", `<div class="test-bar">Test version: try anything. Nothing here is real, and it all resets after a while.</div>`);
+}).catch(() => {});
+
 /* ---------- toast + confirm ---------- */
 let tt;
 function toast(msg, bad) {

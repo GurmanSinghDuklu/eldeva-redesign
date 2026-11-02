@@ -503,7 +503,7 @@ footer.site .fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:
 <body>
 
 <a class="skip" href="#collection">Skip to the collection</a>
-<div class="announce">Free UK delivery on orders over <b>£55</b> · one offer per order</div>
+<div class="announce">Free UK delivery on orders over <b>£80</b> · one offer per order</div>
 
 <header class="site" id="hdr">
   <div class="pill">
@@ -616,8 +616,8 @@ footer.site .fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:
 
 <div class="ribbon" aria-hidden="true">
   <div class="track">
-    <span>Soy wax</span><span>Premium fragrance oils</span><span>Poured in small batches</span><span>Family run</span><span>Scent that lingers unlit</span><span>Free UK delivery over £55</span>
-    <span>Soy wax</span><span>Premium fragrance oils</span><span>Poured in small batches</span><span>Family run</span><span>Scent that lingers unlit</span><span>Free UK delivery over £55</span>
+    <span>Soy wax</span><span>Premium fragrance oils</span><span>Poured in small batches</span><span>Family run</span><span>Scent that lingers unlit</span><span>Free UK delivery over £80</span>
+    <span>Soy wax</span><span>Premium fragrance oils</span><span>Poured in small batches</span><span>Family run</span><span>Scent that lingers unlit</span><span>Free UK delivery over £80</span>
   </div>
 </div>
 
@@ -811,7 +811,7 @@ footer.site .fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:
       <div class="fsocial"><a href="https://www.instagram.com/eldeva_candle/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://www.facebook.com/profile.php?id=61576234643166" target="_blank" rel="noopener">Facebook ↗</a></div>
     </div>
     <div class="giant" aria-hidden="true">Eldeva</div>
-    <div class="fine"><span>© 2026 Eldeva · <a href="privacy-policy.html">Privacy policy</a> · <a href="refund-policy.html">Refund policy</a> · <a href="terms-of-service.html">Terms of service</a></span></div>
+    <div class="fine"><span>© 2026 Eldeva · <a href="privacy-policy.html">Privacy policy</a> · <a href="refund-policy.html">Refund policy</a> · <a href="terms-of-service.html">Terms of service</a> · <a href="contact-information.html">Contact information</a></span><span>We accept Visa · Mastercard · American&nbsp;Express · Apple&nbsp;Pay · Google&nbsp;Pay · PayPal</span></div>
   </div>
 </footer>
 
@@ -824,7 +824,7 @@ footer.site .fine{display:flex;justify-content:space-between;gap:16px;flex-wrap:
   <div class="dr-foot">
     <div class="dr-total"><span>Subtotal</span><b id="bagTotal">£0.00</b></div>
     <button class="btn" id="checkout" style="width:100%;justify-content:center">Checkout</button>
-    <p class="dr-note">Concept mockup. Checkout isn't connected.</p>
+    <p class="dr-note">Taxes included. Discounts and delivery calculated at checkout.<br>Concept mockup. Checkout isn't connected.</p>
   </div>
 </aside>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -1127,7 +1127,7 @@ if (matchMedia("(pointer:fine)").matches && !reduce) {
   (function g() { gx += (tx - gx) * 0.12; gy += (ty - gy) * 0.12; glow.style.transform = `translate(${gx}px,${gy}px)`; requestAnimationFrame(g); })();
 }
 
-/* Bag: add, adjust, and a free-delivery progress bar (free UK delivery over £55) */
+/* Bag: add, adjust, and a free-delivery progress bar (free UK delivery over £80) */
 const PRICES = { "The Wax Ritual Set": 25.99, "A Moment to Remember · Whispers of Winter": 55 };
 const IMGS = Object.fromEntries(window.PRODUCTS.map(p => [p.name, `assets/${p.img}.jpg`]));
 IMGS["The Wax Ritual Set"] = "assets/set-1.jpg"; IMGS["A Moment to Remember · Whispers of Winter"] = "assets/products/a-moment-to-remember.jpg";
@@ -1135,7 +1135,7 @@ IMGS["The Wax Ritual Set"] = "assets/set-1.jpg"; IMGS["A Moment to Remember · W
 [["Whispers of Winter", "whispers-of-winter"], ["Sugar & Spice", "sugar-spice"], ["Maple Haze", "maple-haze"], ["Crimson Eve", "crimson-eve"]]
   .forEach(([n, f]) => { PRICES[n + " · 20cl candle"] = 27; IMGS[n + " · 20cl candle"] = `assets/products/${f}.jpg`; }); IMGS["Signature 30cl candle"] = "assets/lifestyle/thumb/studio-signature.jpg";
 const priceOf = n => PRICES[n] ?? 30;
-const FREE = 55, gbp = v => "£" + v.toFixed(2);
+const FREE = 80, gbp = v => "£" + v.toFixed(2);
 const bagItems = new Map();
 try { (JSON.parse(sessionStorage.getItem("eldeva-bag")) || []).forEach(([n, q, p, im]) => { bagItems.set(n, q); if (p != null && !(n in PRICES)) PRICES[n] = p; if (im && !IMGS[n]) IMGS[n] = im; }); } catch (e) {}
 const countEl = $("#bagCount"), toast = $("#toast"), drawer = $("#drawer"), scrim = $("#scrim");

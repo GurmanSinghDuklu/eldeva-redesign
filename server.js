@@ -7,11 +7,14 @@
 //   node server.js remove-user <name>  delete a login
 //
 // Behind an HTTPS proxy, set TRUST_PROXY=1 so login cookies are marked Secure.
+// TEST_MODE=1 runs a test copy: data lives in a throwaway folder that starts from the real products only,
+// with one login from TEST_USER and TEST_PASSWORD, so nothing testers do reaches data/.
 "use strict";
 const http = require("http"), fs = require("fs"), fsp = fs.promises, path = require("path"), crypto = require("crypto");
 
 const ROOT = __dirname;
-const DATA = path.join(ROOT, "data"), UPLOADS = path.join(ROOT, "uploads");
+const TEST_MODE = process.env.TEST_MODE === "1";
+const DATA = TEST_MODE ? path.join(require("os").tmpdir(), "eldeva-test") : path.join(ROOT, "data"), UPLOADS = path.join(ROOT, "uploads");
 const PRODUCTS_FILE = path.join(DATA, "products.json"), USERS_FILE = path.join(DATA, "users.json"), CATALOG_FILE = path.join(ROOT, "catalog.js");
 const PORT = Number(process.env.PORT) || 8765;
 const TRUST_PROXY = process.env.TRUST_PROXY === "1";
@@ -198,6 +201,7 @@ const sameOrigin = req => { try { return new URL(req.headers.origin).host === re
 async function api(req, res, url) {
   const route = url.pathname.replace(/^\/api/, ""), method = req.method;
   if (method !== "GET" && !sameOrigin(req)) return send(res, 403, { error: "Blocked: request didn't come from this site." });
+  if (route === "/mode") return send(res, 200, { test: TEST_MODE });
 
   if (route === "/login" && method === "POST") {
     if (rateLimited(ipOf(req))) return send(res, 429, { error: "Too many attempts. Try again in 15 minutes." });
@@ -265,6 +269,7 @@ async function serveStatic(req, res, url) {
     "Content-Type": mime, "Accept-Ranges": "bytes", "X-Content-Type-Options": "nosniff",
     "Cache-Control": /^(text|application)\//.test(mime) || p === "/catalog.js" ? "no-cache" : p.startsWith("/uploads/") ? "public, max-age=31536000, immutable" : "public, max-age=3600"
   };
+  if (TEST_MODE) headers["X-Robots-Tag"] = "noindex"; // keep the test copy of the shop out of search results
   if (p.startsWith("/admin/")) Object.assign(headers, { "X-Robots-Tag": "noindex", "X-Frame-Options": "DENY", "Referrer-Policy": "same-origin" });
   const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || "");
   if (range && (range[1] || range[2])) { // videos need byte ranges (Safari)
@@ -281,6 +286,14 @@ async function serveStatic(req, res, url) {
 
 /* ---------- start ---------- */
 async function start() {
+  if (TEST_MODE) {
+    await fsp.rm(DATA, { recursive: true, force: true });
+    await fsp.mkdir(DATA, { recursive: true });
+    await fsp.copyFile(path.join(ROOT, "data", "products.json"), PRODUCTS_FILE);
+    const { TEST_USER: name, TEST_PASSWORD: pw } = process.env;
+    if (name && pw) fs.writeFileSync(USERS_FILE, JSON.stringify({ [name.toLowerCase()]: { name, ...hashPassword(pw) } }, null, 2), { mode: 0o600 });
+    console.log(`Test mode: data in ${DATA}, starting from the real products only.`);
+  }
   if (!fs.existsSync(PRODUCTS_FILE)) { console.error("data/products.json is missing."); process.exit(1); }
   await fsp.writeFile(CATALOG_FILE, catalogSource(await readProducts())); // keep catalog.js in step with the data
   if (!Object.keys(readUsers()).length) console.warn("No admin logins yet. Create one with: node server.js add-user <name>");

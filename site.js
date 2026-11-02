@@ -81,8 +81,8 @@ if (glow && matchMedia("(pointer:fine)").matches && !reduce) {
   (function g() { gx += (tx - gx) * 0.12; gy += (ty - gy) * 0.12; glow.style.transform = `translate(${gx}px,${gy}px)`; requestAnimationFrame(g); })();
 }
 
-/* Bag: kept for the visit so it follows you between pages. Free UK delivery over £55. */
-const FREE = 55, gbp = v => "£" + v.toFixed(2);
+/* Bag: kept for the visit so it follows you between pages. Free UK delivery over £80. */
+const FREE = 80, gbp = v => "£" + v.toFixed(2);
 const BAG_KEY = "eldeva-bag";
 const bagItems = new Map();
 try { (JSON.parse(sessionStorage.getItem(BAG_KEY)) || []).forEach(([n, q, price, img]) => { bagItems.set(n, q); extra[n] = { price, img }; }); } catch (e) {}

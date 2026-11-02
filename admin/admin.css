@@ -48,6 +48,9 @@ select.input{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmln
 .err{font-size:13px;font-weight:500;color:var(--err)}
 .form-err{padding:12px 14px;border-radius:12px;background:#F6E4DF;color:var(--err);font-size:14px;margin-bottom:18px}
 
+/* test copy banner */
+.test-bar{padding:9px 16px;background:var(--gold);color:var(--choc);text-align:center;font:600 12px/1.4 var(--sans);letter-spacing:.04em}
+
 /* top bar */
 .top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--cream) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .top-in{max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px}

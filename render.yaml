@@ -1,0 +1,20 @@
+# Render Blueprint for the test copy of the site and admin (see TEST_MODE in server.js).
+# Free plan: it sleeps when idle, and its data resets whenever it restarts.
+services:
+  - type: web
+    name: eldeva-test
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/mode
+    envVars:
+      - key: TEST_MODE
+        value: "1"
+      - key: TRUST_PROXY
+        value: "1"
+      - key: TEST_USER
+        value: tester
+      - key: TEST_PASSWORD
+        sync: false
